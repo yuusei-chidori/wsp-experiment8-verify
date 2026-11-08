@@ -1,0 +1,74 @@
+{
+ "runs10/dev_base.jsonl": {
+  "n": 200,
+  "uniq": 200,
+  "ok": 167,
+  "cut": 2,
+  "mean_tok": 3822,
+  "wait1k": 4.11
+ },
+ "runs11/dev_H1s05.jsonl": {
+  "n": 200,
+  "uniq": 200,
+  "ok": 169,
+  "cut": 2,
+  "mean_tok": 3845,
+  "wait1k": 4.34
+ },
+ "runs11/dev_H2s2.jsonl": {
+  "n": 200,
+  "uniq": 200,
+  "ok": 171,
+  "cut": 4,
+  "mean_tok": 4520,
+  "wait1k": 3.61
+ },
+ "runs10/r1d15_gsm8k.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 87,
+  "cut": 0,
+  "mean_tok": 1907,
+  "wait1k": 3.43
+ },
+ "runs10/r1d15_math.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 82,
+  "cut": 1,
+  "mean_tok": 4559,
+  "wait1k": 4.96
+ },
+ "runs11/test_h_H2s2_gsm8k.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 89,
+  "cut": 0,
+  "mean_tok": 2254,
+  "wait1k": 3.62
+ },
+ "runs11/test_h_H2s2_math.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 84,
+  "cut": 1,
+  "mean_tok": 4679,
+  "wait1k": 4.12
+ },
+ "runs11/test_h_R_H2s2_gsm8k.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 89,
+  "cut": 0,
+  "mean_tok": 2014,
+  "wait1k": 3.84
+ },
+ "runs11/test_h_R_H2s2_math.jsonl": {
+  "n": 100,
+  "uniq": 100,
+  "ok": 83,
+  "cut": 0,
+  "mean_tok": 4353,
+  "wait1k": 4.94
+ }
+}

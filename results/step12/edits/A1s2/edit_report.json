@@ -1,0 +1,13 @@
+{
+ "name": "A1s2",
+ "site": "model.layers.21.self_attn.o_proj",
+ "direction": "1",
+ "strength": 2.0,
+ "pool": "whole",
+ "check_auc": 0.6428571343421936,
+ "changed_entries": 2137506,
+ "share_of_all": 0.0012028138167609033,
+ "change_fro": 8.109666268834422,
+ "weight_fro": 90.89014385077732,
+ "sha256_file": "dd444686937cac028701789e891b2f745d9c4a35ddc784d9d1b0932e6ab7cac5"
+}

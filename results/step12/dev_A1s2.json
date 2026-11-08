@@ -1,0 +1,12 @@
+{
+ "label": "DEV_A1s2",
+ "n": 100,
+ "base": 78,
+ "edited": 86,
+ "better": 8,
+ "worse": 0,
+ "p": 0.0078125,
+ "cut": 0,
+ "mean_tokens": 5228.72,
+ "wait_per_1k": 4.651233954007864
+}

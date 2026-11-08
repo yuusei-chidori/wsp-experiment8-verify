@@ -1,0 +1,14 @@
+{
+ "name": "R_H2s2",
+ "site": "model.layers.18.mlp.down_proj",
+ "direction": "random:0:H2s2",
+ "strength": 3.696426877037781,
+ "random_of": "H2s2",
+ "seed": 0,
+ "cos_with_ref": 1.734723475976807e-17,
+ "changed_entries": 12807041,
+ "share_of_all": 0.0072067567841322434,
+ "change_fro": 13.75021168701755,
+ "weight_fro": 141.6140295308908,
+ "sha256_file": "a794af2d223dc0d4d251a509ffe41dc469d948cb25402799bb35596bc1815ba5"
+}

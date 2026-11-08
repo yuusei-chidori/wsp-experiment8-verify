@@ -1,0 +1,5 @@
+{"name": "H1s05", "n": 64, "total": 38, "fail_set": 17, "control": 21, "cut": 8, "mean_tokens": 5195.953125, "wait_per_1k": 5.791767030230859}
+{"name": "H1s1", "n": 64, "total": 38, "fail_set": 15, "control": 23, "cut": 5, "mean_tokens": 5056.203125, "wait_per_1k": 5.200913481892601}
+{"name": "H1s2", "n": 64, "total": 36, "fail_set": 14, "control": 22, "cut": 8, "mean_tokens": 5707.0, "wait_per_1k": 8.74748116348344}
+{"name": "H2s1", "n": 64, "total": 36, "fail_set": 15, "control": 21, "cut": 7, "mean_tokens": 5713.75, "wait_per_1k": 6.032596805950558}
+{"name": "H2s2", "n": 64, "total": 42, "fail_set": 19, "control": 23, "cut": 8, "mean_tokens": 5741.90625, "wait_per_1k": 4.91452642578412}

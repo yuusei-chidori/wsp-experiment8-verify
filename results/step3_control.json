@@ -1,0 +1,34 @@
+{
+ "seed": 0,
+ "tensors": {
+  "model.language_model.layers.15.mlp.down_proj.weight": {
+   "columns": 64,
+   "cos_r_u": 4.336808689942018e-17,
+   "published_alpha": 6.000321105305702,
+   "control_alpha": 28.035887614766565,
+   "published_change_norm": 1.748887620355205,
+   "control_change_norm": 1.7489154748955407,
+   "norm_ratio_after_bf16": 1.0000159270041205,
+   "u_proj_mean_abs_cols": 0.030609485830445808,
+   "r_proj_mean_abs_cols": 0.006489652953034348,
+   "changed_entries": 65188,
+   "changed_columns": 64,
+   "sha256_control": "a1ba1655ae52304285a78d0d58dcdb2ff8cd4f6bff0f94d29b2c84ca43fc4185"
+  },
+  "model.language_model.layers.19.mlp.down_proj.weight": {
+   "columns": 64,
+   "cos_r_u": 3.2959746043559335e-17,
+   "published_alpha": 6.000173248683295,
+   "control_alpha": 17.10512239249909,
+   "published_change_norm": 1.3987631914068714,
+   "control_change_norm": 1.3988233865233561,
+   "norm_ratio_after_bf16": 1.0000430345299722,
+   "u_proj_mean_abs_cols": 0.024014391653704753,
+   "r_proj_mean_abs_cols": 0.008156545358297636,
+   "changed_entries": 64869,
+   "changed_columns": 64,
+   "sha256_control": "c359a56fbd27fbe3266361e8e23332ef307b3c757971df04baad3a2231b92e81"
+  }
+ },
+ "header_identical_to_base": true
+}

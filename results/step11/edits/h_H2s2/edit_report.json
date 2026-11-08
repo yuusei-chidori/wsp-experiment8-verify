@@ -1,0 +1,11 @@
+{
+ "name": "H2s2",
+ "site": "model.layers.18.mlp.down_proj",
+ "direction": "matched",
+ "strength": 2.0,
+ "changed_entries": 12507660,
+ "share_of_all": 0.00703828960636727,
+ "change_fro": 13.750220972106607,
+ "weight_fro": 141.6140295308908,
+ "sha256_file": "b63b49de02160e72850ec1c7a3f8bccd9ce37f12dd0d60200bce412a06cfb1b2"
+}

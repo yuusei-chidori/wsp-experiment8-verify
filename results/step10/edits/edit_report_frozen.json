@@ -1,0 +1,19 @@
+{
+ "spec": "edits10/wrongL15a1.json",
+ "tensors": {
+  "model.layers.15.mlp.down_proj.weight": {
+   "edits": [
+    {
+     "alpha": 1,
+     "cols": null
+    }
+   ],
+   "change_fro": 5.97926968716346,
+   "weight_fro": 140.5391562148115,
+   "changed_entries": 10931203,
+   "entries": 13762560,
+   "sha256": "c3684975b274970b50990187db00349f772c3b57410422880fb75995bdbd9e3c"
+  }
+ },
+ "sha256_file": "4b85963049152e1debb31ab7648a884310117f663483baff28e81583c009d218"
+}

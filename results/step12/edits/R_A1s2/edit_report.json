@@ -1,0 +1,14 @@
+{
+ "name": "R_A1s2",
+ "site": "model.layers.21.self_attn.o_proj",
+ "direction": "random:0:A1s2",
+ "strength": 3.5263465260272615,
+ "random_of": "A1s2",
+ "seed": 0,
+ "cos_with_ref": 2.6020852139652106e-18,
+ "changed_entries": 2177546,
+ "share_of_all": 0.0012253450588828466,
+ "change_fro": 8.109902302876604,
+ "weight_fro": 90.89014385077732,
+ "sha256_file": "8a235daac66312d7f090855828a9ec5f5f419884d08ee83d74dca50cfb0c31e2"
+}

@@ -1,0 +1,11 @@
+{
+ "name": "H1s1",
+ "site": "model.layers.26.self_attn.o_proj",
+ "direction": "plain",
+ "strength": 1.0,
+ "changed_entries": 2090748,
+ "share_of_all": 0.0011765022328663521,
+ "change_fro": 4.904869728929608,
+ "weight_fro": 101.84029175625894,
+ "sha256_file": "242177a3be60060ce17a1ba10ed3e0d418f8d7949bbc1754471dbd25b2245974"
+}

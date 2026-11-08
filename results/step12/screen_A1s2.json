@@ -1,0 +1,12 @@
+{
+ "label": "SCREEN_A1s2",
+ "n": 50,
+ "base": 25,
+ "edited": 34,
+ "better": 14,
+ "worse": 5,
+ "p": 0.063568115234375,
+ "cut": 6,
+ "mean_tokens": 7146.18,
+ "wait_per_1k": 4.477916873070647
+}
