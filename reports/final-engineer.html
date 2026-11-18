@@ -65,14 +65,14 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <span class="tag">Step 1〜5・7〜9 総括</span>
 <span class="tag">Qwen3.5-0.8B</span>
 <span class="tag">Apple M4 Pro・mlx-lm 0.32.2</span>
-<span class="tag">2026-11-06</span>
+<span class="tag">2026-11-18 追試反映</span>
 </div>
-<div class="message-box large">公開された編集は本物で、効果も再現した。効いたのは偶然ではなく「その方向」</div>
+<div class="message-box large">公開された編集は本物。効いたのは「その方向」</div>
 <div class="summary-grid">
 <div class="mini-card"><b>編集の実体</b><span>2行列・131,072 重み（0.015%）だけ</span></div>
-<div class="mini-card"><b>点数</b><span>GSM8K 31% → 70%、MATH-500 16% → 53%</span></div>
-<div class="mini-card"><b>対照</b><span>同じ列のランダム変更3種は 15〜20% に悪化</span></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 44</div></section>
+<div class="mini-card"><b>点数</b><span>GSM8K 18% → 70%、MATH 5% → 57%</span></div>
+<div class="mini-card"><b>対照</b><span>ランダム変更3種は改善なし</span></div>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">Executive Summary</div></div><div class="content">
 <div class="two-col">
@@ -83,20 +83,20 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <li>著者ログでテストとの重なり・選び方を確認（Step 4）</li>
 </ul></div>
 <div class="card highlight"><h3>結論</h3><ul>
-<li>公開モデルは記事どおりの2行列・階数1の編集だけ（Step 1）</li>
+<li>編集は記事どおり2行列・階数1だけ（Step 1）</li>
 <li>GSM8K 31→70%、MATH 16→53%（Step 2・7）。著者の選び方で 18→70%・5→57%（8・9）</li>
-<li>ランダム方向の対照3種は 15〜20% に悪化（Step 3・5）</li>
+<li>ランダム方向の対照3種は 15〜20% で改善なし（Step 3・5）</li>
 <li>練習用の問題とテストの重なりなし（Step 4）</li>
 </ul></div>
 </div>
-<div class="message-box">中身は数学力ではなく「思考ループの解除」。点の差も説明できた。探索の再現性は未確認。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 44</div></section>
+<div class="message-box">中身は「思考ループの解除」。追試でも再現（3-20）。探索の再現性は未確認。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">目次</div></div><div class="content">
 <div class="three-col">
 <div class="card"><h3>1. 導入と背景（1-1〜1-5）</h3><ul><li>何を検証したか</li><li>Weight-Space Programming とは</li><li>研究の歴史（重みを書く／読む・編集する）</li><li>なぜ重要か</li></ul></div>
-<div class="card"><h3>2. 実験8と検証（2-1〜3-19）</h3><ul><li>実験8の設定と編集の中身</li><li>変わった重みの実例</li><li>Step 1〜5・7〜10 の方法と結果</li><li>実装上の問題（mlx-lm）</li></ul></div>
+<div class="card"><h3>2. 実験8と検証（2-1〜3-20）</h3><ul><li>実験8の設定と編集の中身</li><li>変わった重みの実例</li><li>Step 1〜12 の方法と結果・追試</li><li>実装上の問題（mlx-lm）</li></ul></div>
 <div class="card"><h3>3. 結論と付録（4-1〜4-4・付録A〜D）</h3><ul><li>主張ごとの判定</li><li>限界と次の検証</li><li>付録：環境・シード・ハッシュ・列番号</li><li>参考文献</li></ul></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 44</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-1 何を検証したか</div></div><div class="content">
 <div class="two-col">
@@ -111,7 +111,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <li>原因は「推論のループ」で、編集はその方向を消している</li>
 </ul></div>
 </div>
-<div class="message-box">実験8は公開モデルとログがそろっており、最も小さなモデルで手元再現できるため、検証の対象に選んだ。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 44</div></section>
+<div class="message-box">実験8は公開モデルとログがそろっており、最も小さなモデルで手元再現できるため、検証の対象に選んだ。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-2 Weight-Space Programming とは</div></div><div class="content">
 <div class="flow-row tight">
@@ -123,7 +123,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">読む</td><td>1・2・3・7</td><td class="l">重みだけから、どのゲームを学習したか・どの言語か・どちらが迎合的に学習されたかを当てる</td></tr>
 <tr><td class="l">直す</td><td>4・8</td><td class="l">失敗する制御方策を一度の編集で成功させる／Qwen のループを止める</td></tr>
 <tr><td class="l">書く</td><td>5・6</td><td class="l">MinAtar のゲームや囲碁を打つネットワークを、学習なしで一から書く</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-3 研究の歴史①：重みを「書く」方法</div></div><div class="content">
 <div class="compact-table"><table>
@@ -134,7 +134,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>2021</td><td class="l">Linear Transformers = Fast Weight Programmers（Schlag ほか）</td><td class="l">線形注意は実行中に重みを書き換える仕組みと等価（記事が「専用に学習した書き手」として引用）</td></tr>
 <tr><td>2021・2023</td><td class="l">RASP（Weiss ほか）／Tracr（Lindner ほか）</td><td class="l">形式的なプログラムを Transformer の重みにコンパイル（記事が「コンパイラ」として引用）</td></tr>
 </table></div>
-<div class="message-box">どれも「書き手」は最適化か、専用に学習したモデルか、形式言語のコンパイラだった。汎用 LLM が自然言語の指示で書く例はなかった。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 44</div></section>
+<div class="message-box">どれも「書き手」は最適化か、専用に学習したモデルか、形式言語のコンパイラだった。汎用 LLM が自然言語の指示で書く例はなかった。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-4 研究の歴史②：重みを「読む・編集する」方法</div></div><div class="content">
 <div class="compact-table"><table>
@@ -146,7 +146,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>2023</td><td class="l">Activation Steering・Representation Engineering</td><td class="l">内部表現の「方向」を足し引きして振る舞いを変える</td></tr>
 <tr><td>2024</td><td class="l">拒否は単一の方向（Arditi ほか）</td><td class="l">1方向を重みから射影で消すと拒否が消える。実験8の編集はこの形に近い</td></tr>
 </table></div>
-<div class="message-box">実験8の編集（W − α·u(uᵀW)）は、この「方向を重みから消す」流れの上にある。新しいのは、方向を見つけて編集を決めたのが人ではなく汎用 LLM だという点。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 44</div></section>
+<div class="message-box">実験8の編集（W − α·u(uᵀW)）は、この「方向を重みから消す」流れの上にある。新しいのは、方向を見つけて編集を決めたのが人ではなく汎用 LLM だという点。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-5 なぜ重要か（技術的な意味）</div></div><div class="content">
 <div class="two-col">
@@ -163,7 +163,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <li>成功が1回だけなら、方法として信頼できるかは別問題</li>
 </ul></div>
 </div>
-<div class="message-box">検証の4つの問いは、右の4つの心配にそれぞれ対応させた。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 44</div></section>
+<div class="message-box">検証の4つの問いは、右の4つの心配にそれぞれ対応させた。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-1 実験8の設定（著者側）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -174,7 +174,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">1パス</td><td class="l">最大512問の生成（元・編集後の対比も可）か、最大1,024文の読み込み（対数確率・活性）</td></tr>
 <tr><td class="l">禁止</td><td class="l">勾配・学習・反復的な当てはめ、カーネル内でのモデル実行、インターネット、埋め込み・出力層・最終正規化の編集、行列の定数倍だけの編集</td></tr>
 <tr><td class="l">評価（実行後）</td><td class="l">vLLM、温度 0.6・top_p 0.95・top_k 20・presence penalty 1.5、最大 32,768 トークン。GSM8K は各問2回</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-2 Astra が見つけた問題：ループ</div></div><div class="content">
 <div class="two-col">
@@ -189,7 +189,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <li>強さ1・2・4で反復側の対数確率だけが下がることを確認してから、64列・強さ6に決めた</li>
 </ul></div>
 </div>
-<div class="message-box">つまり「数学を教えた」のではなく「止まれなくなる癖を外した」編集。これが検証全体の見方の軸になる。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 44</div></section>
+<div class="message-box">つまり「数学を教えた」のではなく「止まれなくなる癖を外した」編集。これが検証全体の見方の軸になる。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-3 編集の式と場所</div></div><div class="content">
 <div class="message-box large">W′ = W − 6 · u ⊗ (mask₆₄ ⊙ (uᵀW))</div>
@@ -200,7 +200,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">触れた重み ／ bf16 で実際に変わった重み</td><td>65,536 ／ 65,260</td><td>65,536 ／ 64,928</td></tr>
 <tr><td class="l">テンソル全体の相対変化（フロベニウス）</td><td>10.6%</td><td>8.1%</td></tr>
 </table></div>
-<div class="message-box">層15・19 は full attention 層。2層の u（1,024 次元）のコサインは 0.85。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 44</div></section>
+<div class="message-box">層15・19 は full attention 層。2層の u（1,024 次元）のコサインは 0.85。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-4 実際に変わった重みの例（層15）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -211,7 +211,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">列 11・行 0</td><td>−0.02612</td><td>+0.00458</td><td>−0.02148</td><td>−0.02515</td><td>−0.02551</td></tr>
 <tr><td class="l">列 1・全行（対象外の列）</td><td colspan="5">すべてのモデルで元と完全に同じ</td></tr>
 </table></div>
-<div class="message-box">公開編集は 64 列の値を大きく動かし、符号が変わる重みもある（列11）。対照は同じ列を別の方向に動かす。bf16 の丸めで変わらない値もある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 44</div></section>
+<div class="message-box">公開編集は 64 列の値を大きく動かし、符号が変わる重みもある（列11）。対照は同じ列を別の方向に動かす。bf16 の丸めで変わらない値もある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-5 編集の数学的な性質（Step 1 で測定）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -221,7 +221,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">選んだ列での |uᵀW| の平均（前 → 後）</td><td>0.031 → 0.153</td><td>0.024 → 0.120</td><td class="l">uᵀW′ = (1 − 6)·uᵀW = −5·uᵀW</td></tr>
 <tr><td class="l">64列の中での相対変化</td><td>85%</td><td>62%</td><td class="l">選んだ列は大きく変わる</td></tr>
 </table></div>
-<div class="message-box">注意：α = 1 なら方向の成分を「消す」が、α = 6 は成分を −5 倍に「反転して増幅」している。記事の「方向を引く」は、実際には「逆向きに強く書く」編集だった。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">13 / 44</div></section>
+<div class="message-box">注意：α = 1 なら方向の成分を「消す」が、α = 6 は成分を −5 倍に「反転して増幅」している。記事の「方向を引く」は、実際には「逆向きに強く書く」編集だった。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">13 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-6 著者が報告した結果</div></div><div class="content">
 <div class="compact-table"><table>
@@ -234,7 +234,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <div class="two-col">
 <div class="card"><h3>AI自身の確認（練習問題）</h3><p>固定後の 1,152問で 10.6% → 60.4%（+49.8点、SE 1.5、改善579・悪化5）。著者の対照は +1.56点（SE 3.52）</p></div>
 <div class="card"><h3>Gemma 3 270M（ループしないモデル）</h3><p>同じ方法でも改善なし（6.8 → 7.0〜7.7）。著者も「隠れた能力を出しただけ」と認めている</p></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">14 / 44</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">14 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-1 検証の全体像：実験と、実験でないもの</div></div><div class="content">
 <div class="compact-table"><table>
@@ -247,7 +247,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr class="up"><td>8・9</td><td>実験</td><td class="l">著者と同じサンプリング順序で再実行</td><td class="l">手元で生成</td></tr>
 <tr class="up"><td style="white-space:nowrap">10〜12</td><td>実験</td><td class="l">別モデルで Claude が編集を探し試験（11・12 は公開ツール）</td><td class="l">DeepSeek 1.5B・手元</td></tr>
 </table></div>
-<div class="message-box">Step 6 は報告書の作成。Astra の探索そのものは未実施（使っていない）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">15 / 44</div></section>
+<div class="message-box">Step 6 は報告書の作成。Astra の探索は未実施。全 Step の追試は 3-20。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">15 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-2 Step 1：重みの差分</div></div><div class="content">
 <div class="compact-table"><table>
@@ -259,7 +259,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">著者の差分ファイル（edit.npz）からの再構成</td><td class="l">1ビットも違わず一致</td></tr>
 <tr><td class="l">式 W − 6·u(mask·uᵀW) への当てはまり</td><td class="l">残差 0.23%（層15）・0.29%（層19）。bf16 丸めの範囲</td></tr>
 </table></div>
-<div class="message-box">公開モデルは、記事に書かれたとおりの小さな編集そのもの。他のどこにも手は入っていない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">16 / 44</div></section>
+<div class="message-box">公開モデルは、記事に書かれたとおりの小さな編集そのもの。他のどこにも手は入っていない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">16 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-3 Step 2：方法</div></div><div class="content">
 <div class="compact-table"><table>
@@ -271,7 +271,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">実行</td><td class="l">バッチ 48、mx.random.seed(0)、各問1回</td></tr>
 <tr><td class="l">採点</td><td class="l">最後の &lt;/think&gt; 以降の最後の \boxed{} を math-verify で照合。数値一致で交差確認</td></tr>
 <tr><td class="l">統計</td><td class="l">Wilson 95%区間、対応のある差と標準誤差、正確 McNemar 検定</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">17 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">17 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-4 Step 2：結果</div></div><div class="content">
 <div class="compact-table"><table>
@@ -283,8 +283,8 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 </table></div>
 <div class="two-col">
 <div class="card highlight"><h3>再現できた</h3><p>編集後の 70% は著者の 67.1%（全問）・68%（同じ100問）とほぼ同じ</p></div>
-<div class="card"><h3>差の原因（Step 8）</h3><p>元モデルは手元 31%、著者 15%。サンプリングの順序の違いが原因で、vLLM と同じ順序では 18%（3-13）</p></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">18 / 44</div></section>
+<div class="card"><h3>差の原因（Step 8）</h3><p>手元 31%・著者 15%。vLLM 順序で 18%（3-13）。追試の mlx は 19%（3-20）</p></div>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">18 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-5 Step 2：どこで良くなったか</div></div><div class="content">
 <div class="compact-table"><table>
@@ -296,7 +296,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <div class="card"><h3>読み取れること</h3><p>改善はすべて「ループして終われなかった問題」から。終われた問題の正答率はほぼ変わらない（31 → 30）</p></div>
 <div class="card"><h3>編集後の失敗</h3><p>\boxed がない答えが8件（6件は空白の繰り返しで終わり、2件は箱なし）。新しい種類の崩れが少し出る</p></div>
 </div>
-<div class="message-box">「計算力が上がった」のではなく「最後まで考えて答えを出せるようになった」。これは Astra の診断と一致する。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">19 / 44</div></section>
+<div class="message-box">「計算力が上がった」のではなく「最後まで考えて答えを出せるようになった」。これは Astra の診断と一致する。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">19 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-6 Step 3：ランダム方向の対照（seed 0）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -311,7 +311,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">正答率</td><td>31%</td><td>15%（9〜23）</td><td>70%</td></tr>
 <tr><td class="l">打ち切り ／ 平均トークン</td><td>64% ／ 23,496</td><td>87% ／ 29,635</td><td>0% ／ 9,694</td></tr>
 <tr><td class="l">1問ずつ</td><td colspan="3">元 → 対照：4 改善・20 悪化（p = 0.002）／対照 → 公開編集：56 対 1</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">20 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">20 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-7 Step 4：公開ログの確認</div></div><div class="content">
 <div class="compact-table"><table>
@@ -323,7 +323,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">練習での効果とテストでの効果</td><td class="l">GSM8K 練習 11.6 → 70.8%、テスト 13.8 → 67.1%。目減りなし</td></tr>
 <tr><td class="l">記事に載っていない実行</td><td class="l">v2・v4・v5 の実行や 5 パスの実行。多くは編集なし。50 パスで終わったのは p50c の1本だけ</td></tr>
 </table></div>
-<div class="message-box">データの扱いは正しい。弱い点は、成功した 50 パス実行が1本だけなこと。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">21 / 44</div></section>
+<div class="message-box">データの扱いは正しい。弱い点は、成功した 50 パス実行が1本だけなこと。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">21 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-8 Step 5：対照を2つ追加</div></div><div class="content">
 <div class="compact-table"><table>
@@ -338,7 +338,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">元 → 対照（改善・悪化、p）</td><td>—</td><td>7・18、p = 0.04</td><td>2・18、p = 0.0004</td><td>41・2</td></tr>
 <tr class="up"><td class="l">対照 → 公開編集</td><td>—</td><td>52 対 2（+50点）</td><td>55 対 0（+55点）</td><td>—</td></tr>
 </table></div>
-<div class="message-box">係数を公開編集と同じ 6 にして変更を 1/3〜1/5 にしても、ループは 64% → 84% に増えた。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">22 / 44</div></section>
+<div class="message-box">係数6（変更 1/3〜1/5）でもループは 64% → 84%。追試では元 19%・5a 20%・5b 19%（3-20）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">22 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-9 対照のまとめ：効いたのは方向</div></div><div class="content">
 <div class="compact-table"><table>
@@ -349,7 +349,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">対照 seed 1（5a）</td><td>ランダム</td><td>同じ</td><td>20%</td><td>84%</td><td>16 / 16</td></tr>
 <tr><td class="l">対照 seed 0・係数6（5b）</td><td>ランダム</td><td>21〜35%</td><td>15%</td><td>84%</td><td>14 / 16</td></tr>
 </table></div>
-<div class="message-box">対照どうしの差は有意でない（p = 0.40、1.0）。ランダムな変更は小さくても止まる力を崩し、公開編集はその逆に働く。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">23 / 44</div></section>
+<div class="message-box">ランダムな変更では上がらない。追試では元モデル 19% で、対照との差は有意でない（悪化とは言えない、3-20）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">23 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-10 Step 7：MATH-500（無作為100問）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -363,7 +363,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">上限前に終われた</td><td>16</td><td>16</td><td>0</td><td>0</td></tr>
 <tr class="up"><td class="l">上限まで考え続けた</td><td>84</td><td>37</td><td>18</td><td>29</td></tr>
 </table></div>
-<div class="message-box">改善はすべてループしていた問題から。著者と同じ選び方では 5 → 57%（3-15）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">24 / 44</div></section>
+<div class="message-box">改善はすべてループしていた問題から。著者と同じ選び方では 5 → 57%（3-15）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">24 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-11 Step 7：難易度別と新しい副作用</div></div><div class="content">
 <div class="compact-table"><table>
@@ -376,7 +376,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">終わった数</td><td>36</td><td>100</td><td>16</td><td>71</td></tr>
 <tr><td class="l">うち &lt;/think&gt; なしで止まった（答えなし）</td><td>0</td><td>6</td><td>0</td><td>8</td></tr>
 </table></div>
-<div class="message-box">難易度4・5 では編集後も半分近くがループする。編集後は思考の箇条書きの空白が伸びた末に終了トークンが出て、答えなしで終わる例がある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">25 / 44</div></section>
+<div class="message-box">難易度4・5 では編集後も半分近くがループする。編集後は思考の箇条書きの空白が伸びた末に終了トークンが出て、答えなしで終わる例がある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">25 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-12 実装上の問題：mlx-lm の長時間生成</div></div><div class="content">
 <div class="two-col">
@@ -389,7 +389,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <li>256 ステップごとに各キャッシュの left_padding・lengths・offset を mx.eval → グラフは約1,040辺で一定に</li>
 </ul></div>
 </div>
-<div class="message-box">別に、他アプリとメモリを取り合うと GPU のメモリ不足で止まる。答えを1問ずつ保存して再開できるようにした（Step 7 はバッチ 24 で停止なし）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">26 / 44</div></section>
+<div class="message-box">別に、他アプリとメモリを取り合うと GPU のメモリ不足で止まる。答えを1問ずつ保存して再開できるようにした（Step 7 はバッチ 24 で停止なし）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">26 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-13 Step 8：元モデルの点の差の原因</div></div><div class="content">
 <div class="compact-table"><table>
@@ -401,7 +401,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><th>元モデル・同じ100問</th><th>mlx 順序（Step 2）</th><th>vLLM 順序</th><th>著者</th></tr>
 <tr><td class="l">正答率 ／ 打ち切り</td><td>31% ／ 64%</td><td>18% ／ 82%</td><td>15% ／ 約86%</td></tr>
 </table></div>
-<div class="message-box">vllm_order_sampler を run_gen.py に追加（--sampler vllm）。変化は14問悪化・1問改善（p = 0.001）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">27 / 44</div></section>
+<div class="message-box">--sampler vllm を追加。14悪化・1改善（p = 0.001）。追試では再現せず（3-20）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">27 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-14 Step 8：vLLM 順序での編集の効果</div></div><div class="content">
 <div class="compact-table"><table>
@@ -412,7 +412,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">平均トークン 元 → 編集</td><td>23,496 → 9,694</td><td>27,826 → 11,719</td><td>—</td><td>29,289 → 11,993</td></tr>
 <tr><td class="l">改善・悪化（p）</td><td>41・2</td><td>52・0（4×10⁻¹⁶）</td><td>—</td><td>—</td></tr>
 </table></div>
-<div class="message-box">選び方を揃えると全指標が著者とほぼ一致。公開編集の点は順序に左右されず、元モデルだけが変わる。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">28 / 44</div></section>
+<div class="message-box">選び方を揃えると全指標が著者とほぼ一致。vLLM 順序の 18 → 70 は追試でも完全一致。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">28 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-15 Step 9：MATH-500 を vLLM 順序で</div></div><div class="content">
 <div class="compact-table"><table>
@@ -423,7 +423,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">平均トークン 元 → 編集</td><td>29,157 → 20,844</td><td>31,361 → 20,464</td><td>30,868 → 22,037</td></tr>
 <tr><td class="l">改善・悪化（p）</td><td>37・0</td><td>52・0（4×10⁻¹⁶）</td><td>—</td></tr>
 </table></div>
-<div class="message-box">元モデルは mlx → vLLM 順序で12問悪化・1問改善（p = 0.003、すべて打ち切り）。公開編集は 9・5（p = 0.42）で変わらない。編集後 57% は区間 47〜66% で著者 48.1% を含む。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">29 / 44</div></section>
+<div class="message-box">元モデルは mlx → vLLM 順序で12問悪化・1問改善（p = 0.003、すべて打ち切り）。公開編集は 9・5（p = 0.42）で変わらない。編集後 57% は区間 47〜66% で著者 48.1% を含む。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">29 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-16 Step 10：別のモデルで方法を試す</div></div><div class="content">
 <div class="compact-table"><table>
@@ -435,7 +435,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">選び方</td><td class="l">6候補を開発用200問で比較 → 1位（15層 α 1、172 ／ 200）を凍結（SHA-256 記録）</td></tr>
 <tr><td class="l">試験</td><td class="l">凍結した編集と同じ変化量のランダム編集を、GSM8K・MATH-500 各100問で</td></tr>
 </table></div>
-<div class="message-box">決まりは開発用の比較の前に保存（results/step10/step10_PROTOCOL.md）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">30 / 44</div></section>
+<div class="message-box">決まりは開発用の比較の前に保存（results/step10/step10_PROTOCOL.md）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">30 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-17 Step 10：結果</div></div><div class="content">
 <div class="compact-table"><table>
@@ -444,7 +444,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr class="up"><td class="l">合計（改善・悪化、p）</td><td>169</td><td>170（12・11、p 1.0）</td><td>177（16・8、p 0.15）</td></tr>
 <tr><td class="l">開発用：Wait 方向 α 3</td><td colspan="3" class="l">Wait −75%、長さ −33%、正答 167 → 165</td></tr>
 </table></div>
-<div class="message-box">行動は動かせたが正答率は上がらない。論文の上昇は「ループの故障」を直した効果と読める。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">31 / 44</div></section>
+<div class="message-box">行動は動かせたが正答率は上がらない。論文の上昇は「ループの故障」を直した効果と読める。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">31 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-18 Step 11：専用ツールで再実験</div></div><div class="content">
 <div class="compact-table"><table>
@@ -455,7 +455,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">選び方</td><td class="l">5候補を練習問題で掃引 → 2候補を開発用へ → 18層 down_proj s 2（171 ／ 200）を凍結</td></tr>
 <tr class="up"><td class="l">本番 200問</td><td class="l">元 169 → 編集 173（13・9、p 0.52）、ランダム 172（11・8、p 0.65）。編集 vs ランダム 12・11</td></tr>
 </table></div>
-<div class="message-box">道具を変えても効果なし。ツールの長さ補正の診断が、効かない理由を生成の前に示した。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">32 / 44</div></section>
+<div class="message-box">道具を変えても効果なし。ツールの長さ補正の診断が、効かない理由を生成の前に示した。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">32 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-19 Step 12：MATH-500 を 90% にできるか</div></div><div class="content">
 <div class="compact-table"><table>
@@ -466,7 +466,18 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">選び方</td><td class="l">4編集を掃引 → 2つを開発用へ → 21層 o_proj s 2（‖ΔW‖ 8.11、層の 8.9%）が 78 → 86（8・0、p 0.008）で凍結</td></tr>
 <tr class="up"><td class="l">本番 500問</td><td class="l">元 431 → 編集 426（25・30、p 0.59）、ランダム 428（22・25）。編集 vs ランダム 23・25</td></tr>
 </table></div>
-<div class="message-box">開発用の 8勝0敗 は選び方の偶然。1方向を消す編集では 90% に届かない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">33 / 44</div></section>
+<div class="message-box">開発用の 8勝0敗 は選び方の偶然。1方向を消す編集では 90% に届かない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">33 / 45</div></section>
+
+<section class="slide"><div class="header"><div class="title">3-20 追試：ASTRA が Steps 1〜12 をやり直した</div></div><div class="content">
+<div class="compact-table"><table>
+<tr><th>比較（正解数）</th><th>この検証</th><th>追試</th><th>判定</th></tr>
+<tr class="up"><td class="l">GSM8K 元 → 公開編集（vLLM 順序）</td><td>18 → 70</td><td>18 → 70</td><td>完全一致</td></tr>
+<tr class="up"><td class="l">MATH 元 → 公開編集（vLLM ／ mlx 順序）</td><td>5 → 57 ／ 16 → 53</td><td>5 → 57 ／ 16 → 53</td><td>完全一致</td></tr>
+<tr><td class="l">GSM8K 元モデル（mlx 順序）</td><td>31</td><td>19</td><td>再現せず</td></tr>
+<tr><td class="l">ランダム対照3種（対 元モデル）</td><td>15・20・15（悪化）</td><td>15・20・19（p ≥ 0.45）</td><td>悪化は言えない</td></tr>
+<tr class="up"><td class="l">DeepSeek（Steps 10〜12）</td><td>効果なし</td><td>効果なし（500問 431 → 426）</td><td>一致</td></tr>
+</table></div>
+<div class="message-box">新規生成 7,668 回答・独立監査合格。GSM8K の入力順を復元した違いが 31 対 19 の有力な原因（未特定）。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">34 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-1 主張ごとの判定</div></div><div class="content">
 <div class="compact-table"><table>
@@ -474,23 +485,23 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr class="up"><td class="l">小さな編集（約 0.016%）だけ</td><td>確認</td><td class="l">Step 1：2テンソル・0.015%、ハッシュ一致、完全再構成</td></tr>
 <tr class="up"><td class="l">編集後 67.1%・48.1%</td><td>確認</td><td class="l">Step 2・7：70%・53%、Step 8・9：70%・57%</td></tr>
 <tr class="up"><td class="l">原因は推論のループ</td><td>確認</td><td class="l">打ち切り 64% → 0%。改善は打ち切られた問題だけ</td></tr>
-<tr class="up"><td class="l">効いたのは方向</td><td>確認（記事より強い）</td><td class="l">Step 3・5：ランダム3種は 15〜20% に悪化</td></tr>
+<tr class="up"><td class="l">効いたのは方向</td><td>確認</td><td class="l">Step 3・5：ランダム3種は 15〜20%、改善なし（追試も同じ）</td></tr>
 <tr class="up"><td class="l">テストで調整していない</td><td>確認</td><td class="l">Step 4：重なり 0</td></tr>
-<tr class="up"><td class="l">元モデルは 13.8%・7.9%</td><td>確認</td><td class="l">Step 8・9：著者と同じ選び方で 18%・5%</td></tr>
+<tr class="up"><td class="l">元モデルは 13.8%・7.9%</td><td>確認</td><td class="l">Step 8・9：著者と同じ選び方で 18%・5%（追試も一致）</td></tr>
 <tr><td class="l">編集は方向を「消す」</td><td>補足</td><td class="l">α = 6 で成分は −5 倍。実際は「反転して強く書く」</td></tr>
 <tr><td class="l">方法として再現する ／ 他モデル</td><td>未確認 ／ 効果なし</td><td class="l">成功は1本だけ。別の 1.5B で効果なし（Step 10〜12）</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">34 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">35 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-2 限界</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>限界</th><th>影響</th></tr>
 <tr><td class="l">100問・各問1回</td><td class="l">区間は ±7〜9 点。大きな差（+39 点、50 点以上）の結論は変わらないが、数点の差は言えない</td></tr>
-<tr><td class="l">サンプリング順序（mlx-lm と vLLM）</td><td class="l">mlx 順序は元モデルを高く見せ、上がり幅を小さく見せる（+39 対 +52 点）。GSM8K・MATH-500 とも Step 8・9 で補正済み</td></tr>
+<tr><td class="l">サンプリング順序（mlx-lm と vLLM）</td><td class="l">mlx 順序は元モデルを高く見せる。MATH は追試でも確認。GSM8K は追試で差が出ず（31 対 19）未確定</td></tr>
 <tr><td class="l">対照は GSM8K だけ</td><td class="l">MATH-500 は元・公開編集のみ。IFEval は未確認。編集後は 6〜8% が答えなしで止まる</td></tr>
 <tr><td class="l">探索そのものは再実行していない</td><td class="l">GPT-6 Astra の探索は再現できない。Step 10〜12 は Claude による別モデルでの探索で、Astra の再現ではない</td></tr>
-<tr><td class="l">ランダム方向は3本</td><td class="l">分布ではない。ただし3本とも同じ結果で、公開編集との差は大きい</td></tr>
+<tr><td class="l">ランダム方向は3本</td><td class="l">3本とも改善なし。追試では元との差が有意でなく、悪化とは言えない</td></tr>
 <tr><td class="l">上限 32,768 トークン</td><td class="l">効果は上限に強く依存する（上限が長いほど元のループが不利）。別の上限では差が変わる</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">35 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">36 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-3 次の検証</div></div><div class="content">
 <div class="compact-table"><table>
@@ -500,15 +511,15 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>3</td><td class="l">MATH-500 でもランダム方向の対照</td><td class="l">約 2 時間</td><td class="l">難しい問題でも「方向」が効くか</td></tr>
 <tr><td>4</td><td class="l">別の会話で探索をやり直す（著者側）</td><td class="l">手元では不可</td><td class="l">方法としての再現性</td></tr>
 </table></div>
-<div class="message-box">Step 7〜12 は完了。1 は実務での価値に、2・3 は検証の精度に関わる。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">36 / 44</div></section>
+<div class="message-box">Step 7〜12 と追試は完了。1 は実務での価値に、2・3 は検証の精度に関わる。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">37 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-4 まとめ</div></div><div class="content">
 <div class="three-col">
-<div class="card highlight"><h3>確認できた</h3><p>記事どおりの2行列・階数1の編集で GSM8K 31% → 70%、MATH-500 16% → 53%。ランダムな変更は逆に悪化。テストへの調整なし</p></div>
+<div class="card highlight"><h3>確認できた</h3><p>記事どおりの2行列・階数1の編集で GSM8K 18% → 70%、MATH-500 5% → 57%（著者の選び方、追試も一致）。ランダムでは上がらない</p></div>
 <div class="card"><h3>中身</h3><p>数学力を足したのではなく、思考ループを外して最後まで答えさせた。終われた問題の正答率は変わらない</p></div>
 <div class="card"><h3>残ること</h3><p>探索の再現性、短い上限での効果。ループのない別モデルでは3つの手順とも効果なし。MATH-500 90% も届かず（Step 10〜12）</p></div>
 </div>
-<div class="message-box large">実験8の中心の主張は、GSM8K・MATH-500 とも手元の Mac で再現できた。効いたのは偶然ではなく「その方向」</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">37 / 44</div></section>
+<div class="message-box large">実験8の中心の主張は、手元の Mac と別担当の追試で再現できた。効いたのは偶然ではなく「その方向」</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">38 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">付録A：乱数シードと再現に必要な値</div></div><div class="content">
 <div class="compact-table"><table>
@@ -519,7 +530,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l" style="white-space:nowrap">強さ</td><td class="l">大きさ一致：a = ‖D‖F ／ ‖r(rᵀW)‖F。固定：--alpha 6</td><td class="l">同上</td></tr>
 <tr><td class="l" style="white-space:nowrap">丸め</td><td class="l">float64 → float32 → bf16（最近接偶数）。対象外の列は元のビット</td><td class="l">同上</td></tr>
 <tr><td class="l" style="white-space:nowrap">停止</td><td class="l">248044（&lt;|im_end|&gt;）、248046（&lt;|endoftext|&gt;）</td><td class="l">run_gen.py</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">38 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">39 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">付録B：モデルとハッシュ</div></div><div class="content">
 <div class="compact-table"><table>
@@ -529,7 +540,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td class="l">対照 seed 0（Step 3）</td><td class="l mono">a1ba1655ae52304285a78d0d58dcdb2f<wbr>f8cd4f6bff0f94d29b2c84ca43fc4185</td><td class="l mono">c359a56fbd27fbe3266361e8e23332ef<wbr>307b3c757971df04baad3a2231b92e81</td></tr>
 <tr><td class="l">対照 seed 1（5a）</td><td class="l mono">681e62a37199855c2337627ca8d9b384<wbr>bd903f4ff53c9dd57d19dc0ea8c64ad4</td><td class="l mono">b93a96723d306c444cff871e700a2622<wbr>d60c3c27b5f226f35014baa3d502e242</td></tr>
 <tr><td class="l">対照 seed 0・係数6（5b）</td><td class="l mono">337d36e73d9ec436c0f394b033a70e20<wbr>159174ed49ce671a13d66ce7541903e0</td><td class="l mono">b999422a710c9335586f3e7bf3df2ead<wbr>4e3a7ef0f4ce5f45e277cbda1fb5522f</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">39 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">40 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">付録C：編集された64列（MLP ニューロン番号）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -537,18 +548,18 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>15</td><td class="l">0, 2, 11, 25, 34, 35, 38, 39, 46, 50, 53, 56, 61, 62, 63, 64, 67, 73, 100, 108, 129, 135, 156, 169, 209, 215, 264, 266, 294, 327, 328, 357, 371, 376, 412, 414, 442, 504, 505, 509, 516, 580, 590, 601, 638, 682, 738, 882, 926, 930, 1047, 1060, 1087, 1130, 1155, 1184, 1460, 1481, 1787, 1943, 2005, 2066, 2738, 3003</td></tr>
 <tr><td>19</td><td class="l">1, 5, 8, 11, 13, 15, 17, 18, 34, 36, 44, 55, 63, 66, 69, 92, 93, 95, 98, 114, 119, 127, 145, 152, 161, 168, 171, 195, 246, 259, 265, 343, 364, 445, 506, 544, 621, 625, 636, 744, 766, 770, 799, 877, 965, 1003, 1346, 1410, 1505, 1704, 1799, 2072, 2135, 2175, 2248, 2314, 2376, 2437, 2514, 2595, 2664, 2684, 2816, 3343</td></tr>
 </table></div>
-<div class="message-box">列は |uᵀW| の大きい順ではない（層15で最大1,113位、層19で最大2,419位まで含む）。Astra は元モデルの活性（fwd4）で「ループ方向を書き込むニューロン」を選んだ。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">40 / 44</div></section>
+<div class="message-box">列は |uᵀW| の大きい順ではない（層15で最大1,113位、層19で最大2,419位まで含む）。Astra は元モデルの活性（fwd4）で「ループ方向を書き込むニューロン」を選んだ。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">41 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">付録D：ファイル一覧</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>種類</th><th>ファイル</th></tr>
-<tr><td class="l">報告</td><td class="l">reports/ の step1〜step12 の各報告、final-engineer.html、final-executive.html</td></tr>
+<tr><td class="l">報告</td><td class="l">reports/ の step1〜step12 の各報告・replication-*.html、final-engineer.html、final-executive.html</td></tr>
 <tr><td class="l">スクリプト</td><td class="l">diff_weights.py（Step 1）、run_gen.py・grade.py（生成・採点）、make_random_control.py（対照）、check_overlap.py・check_selection.py（Step 4）</td></tr>
 <tr><td class="l">結果</td><td class="l">step1_diff.json、step2_summary.json・step2_problems.jsonl、step3〜5・7〜9 の *.json、step10/・step11/・step12/</td></tr>
 <tr><td class="l">生成した答え</td><td class="l">results/step{2,3,5,7,8,9}_generations/ の各 jsonl（1問1行、全文）</td></tr>
 <tr><td class="l">モデル構成</td><td class="l">24層（linear attention 18・full attention 6）・hidden 1,024・MLP 3,584・語彙 248,320・テキスト部 873,438,784 パラメータ・bf16</td></tr>
 <tr><td class="l">外部</td><td class="l">github.com/RikiyaT/lm_understand-logs（exp8_math）、huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">41 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">42 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">参考文献①</div></div><div class="content">
 <div class="compact-table"><table>
@@ -559,7 +570,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>4</td><td class="l">Ha, Dai, Le (2016). HyperNetworks. arXiv:1609.09106</td></tr>
 <tr><td>5</td><td class="l">Karpathy (2017). Software 2.0. karpathy.medium.com</td></tr>
 <tr><td>6</td><td class="l">Unterthiner ほか (2020). Predicting Neural Network Accuracy from Weights. arXiv:2002.11448</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">42 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">43 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">参考文献②</div></div><div class="content">
 <div class="compact-table"><table>
@@ -570,7 +581,7 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>10</td><td class="l">Elhage ほか (2021). A Mathematical Framework for Transformer Circuits. transformer-circuits.pub</td></tr>
 <tr><td>11</td><td class="l">Olsson ほか (2022). In-context Learning and Induction Heads. arXiv:2209.11895</td></tr>
 <tr><td>12</td><td class="l">Meng ほか (2022). Locating and Editing Factual Associations in GPT (ROME). arXiv:2202.05262 ／ Mass-Editing Memory in a Transformer (MEMIT). arXiv:2210.07229</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">43 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">44 / 45</div></section>
 
 <section class="slide"><div class="header"><div class="title">参考文献③</div></div><div class="content">
 <div class="compact-table"><table>
@@ -581,5 +592,5 @@ Weight-Space Programming 実験8の再検証</div><div class="subtitle">「Spark
 <tr><td>16</td><td class="l">Arditi ほか (2024). Refusal in Language Models Is Mediated by a Single Direction. arXiv:2406.11717</td></tr>
 <tr><td>17</td><td class="l">Salimans ほか (2017). Evolution Strategies as a Scalable Alternative to Reinforcement Learning. arXiv:1703.03864</td></tr>
 <tr><td>18</td><td class="l">Cobbe ほか (2021). GSM8K. arXiv:2110.14168 ／ Hendrycks ほか (2021). MATH. arXiv:2103.03874 ／ Lightman ほか (2023). MATH-500. arXiv:2305.20050</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">44 / 44</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">45 / 45</div></section>
 </div></body></html>

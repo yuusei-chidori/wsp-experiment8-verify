@@ -73,21 +73,21 @@ Can AI really fix another AI's weights?</div><div class="subtitle">We checked MI
 <div class="hero-row">
 <span class="tag">Final report</span>
 <span class="tag">For executives</span>
-<span class="tag">2026-11-06</span>
+<span class="tag">2026-11-18 (replicated)</span>
 </div>
 <div class="message-box large">The core claim holds. But it fixes a specific defect; it does not make any model smarter</div>
 <div class="summary-grid">
-<div class="mini-card"><b>Scores</b><span>Math 31% → 70%, harder math 16% → 53%</span></div>
+<div class="mini-card"><b>Scores</b><span>Math 18% → 70%, harder math 5% → 57% (replicated)</span></div>
 <div class="mini-card"><b>Size of change</b><span>Only 0.015% of the model</span></div>
-<div class="mini-card"><b>Reliability</b><span>No data misuse. Only one success so far</span></div>
+<div class="mini-card"><b>Reliability</b><span>No misuse. Replicated. One search success</span></div>
 </div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">Conclusion on One Page</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>Research claim</th><th>Verdict</th><th>Evidence</th></tr>
 <tr class="up"><td class="l">AI edited only a tiny part (0.016%) of the model</td><td style="white-space:nowrap">True</td><td class="l">Compared the public model bit by bit. Only the 2 spots in the article changed</td></tr>
-<tr class="up"><td class="l">This raised math scores sharply</td><td style="white-space:nowrap">True</td><td class="l">GSM8K 100: 31% → 70%; MATH-500 100: 16% → 53% (research: 67%, 48%). With the research's scoring method: 18% → 70%, 5% → 57%</td></tr>
-<tr class="up"><td class="l">AI understood the cause (not luck)</td><td style="white-space:nowrap">True</td><td class="l">3 edits in a random direction at the same spots all made it worse (15–20%)</td></tr>
+<tr class="up"><td class="l">This raised math scores sharply</td><td style="white-space:nowrap">True</td><td class="l">With the research's scoring method: GSM8K 18% → 70%, MATH-500 5% → 57% (research: 67%, 48%). Same counts in an independent replication</td></tr>
+<tr class="up"><td class="l">AI understood the cause (not luck)</td><td style="white-space:nowrap">True</td><td class="l">3 edits in a random direction at the same spots give no gain (15–20%). Same in the replication</td></tr>
 <tr class="up"><td class="l">Built without seeing test questions</td><td style="white-space:nowrap">True</td><td class="l">Checked public logs. No test leakage or reuse</td></tr>
 <tr><td class="l">Reliable as a general method</td><td style="white-space:nowrap">Unproven</td><td class="l">Only one big success. No effect on a model without loops (research and our 3 extra runs)</td></tr>
 </table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 15</div></section>
@@ -143,14 +143,14 @@ Can AI really fix another AI's weights?</div><div class="subtitle">We checked MI
 <tr><td class="l">4. Cheating</td><td>Check</td><td class="l">Tuned by peeking at tests?</td><td class="l">Checked the team's public logs</td></tr>
 <tr class="up"><td class="l">7. Hard</td><td>Test</td><td class="l">Does harder math improve too?</td><td class="l">Ran 100 MATH-500 problems</td></tr>
 <tr class="up"><td class="l">8, 9. Gap</td><td>Test</td><td class="l">Why our baseline was higher</td><td class="l">Re-ran with the research's method</td></tr>
-<tr class="up"><td class="l">10. Other</td><td>Test</td><td class="l">Does it work on another model?</td><td class="l">Claude searched for a fix and tried it</td></tr>
+<tr class="up"><td class="l">10–12. Other</td><td>Test</td><td class="l">Does it work on another model?</td><td class="l">Claude searched for a fix and tried it</td></tr>
 </table></div>
-<div class="message-box">Step 6 was report writing. We did not rerun the research AI's (Astra) search itself.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
+<div class="message-box">Step 6 was report writing. Astra's search was not rerun. ASTRA did the replication.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">Result 1: Scores Really Rose</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>100 GSM8K problems (same setup)</th><th>Original</th><th>After AI fix</th></tr>
-<tr class="up"><td class="l">Accuracy</td><td>31%</td><td>70%</td></tr>
+<tr class="up"><td class="l">Accuracy</td><td>31%*</td><td>70%</td></tr>
 <tr><td class="l">Cut off at the length limit</td><td>64%</td><td>0%</td></tr>
 <tr><td class="l">Avg. reasoning length per problem</td><td>~23,500 tokens</td><td>~9,700 tokens</td></tr>
 <tr><td class="l">Problems improved / worsened</td><td colspan="2">41 / 2</td></tr>
@@ -158,18 +158,18 @@ Can AI really fix another AI's weights?</div><div class="subtitle">We checked MI
 <tr class="up"><td class="l">100 MATH-500: accuracy (cut off)</td><td>16% (84%)</td><td>53% (29%)</td></tr>
 <tr class="up"><td class="l">MATH-500, research's method (research)</td><td>5% (7.9%)</td><td>57% (48%)</td></tr>
 </table></div>
-<div class="message-box">Harder math: 37 improved, 0 worse. All gains were on problems once cut off.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
+<div class="message-box">* Replication: original 19% (after fix 69%). Research's method, 18% → 70%, matched exactly.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">Result 2: The AI's "Direction" Is What Worked</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>100 GSM8K (same 2 spots edited)</th><th>Accuracy</th><th>Cut off</th></tr>
-<tr><td class="l">Original model</td><td>31%</td><td>64%</td></tr>
+<tr><td class="l">Original model (replication)</td><td>31% (19%)</td><td>64% (80%)</td></tr>
 <tr class="up"><td class="l">AI-fixed model</td><td>70%</td><td>0%</td></tr>
 <tr><td class="l">Random 1: same amount of change</td><td>15%</td><td>87%</td></tr>
 <tr><td class="l">Random 2: other seed, same amount</td><td>20%</td><td>84%</td></tr>
 <tr><td class="l">Random 3: same strength (1/3–1/5 the change)</td><td>15%</td><td>84%</td></tr>
 </table></div>
-<div class="message-box">Same spots, wrong direction: worse. The gain is not luck; the AI found the cause.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
+<div class="message-box">Wrong direction: no gain (15–20%, also in the replication). The gain comes from the AI's direction.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">Result 3: No Misuse of Data</div></div><div class="content">
 <div class="three-col">
@@ -183,7 +183,7 @@ Can AI really fix another AI's weights?</div><div class="subtitle">We checked MI
 <div class="maturity">
 <div class="maturity-card warn"><h3>Fixes defects</h3><p>It worked because of a clear defect: reasoning loops. On a model without loops, scores did not rise (the team's own result; our 3 extra runs also showed no effect)</p></div>
 <div class="maturity-card warn"><h3>One success</h3><p>Only one big success. Unknown if a rerun would find the same fix</p></div>
-<div class="maturity-card warn"><h3>Scope of check</h3><p>100 problems each, one run each. Baseline gap traced to scoring method (both sets). After the fix, it sometimes stops without answering</p></div>
+<div class="maturity-card warn"><h3>Scope of check</h3><p>100 problems each, one run each. Baseline gap explained for harder math; for math the replication got 19%, so unresolved. After the fix, it sometimes stops without answering</p></div>
 </div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">Extra Test: Can a Healthy Model Reach 90%?</div></div><div class="content">
@@ -206,7 +206,7 @@ Can AI really fix another AI's weights?</div><div class="subtitle">We checked MI
 
 <section class="slide"><div class="header"><div class="title">Summary</div></div><div class="content">
 <div class="three-col">
-<div class="card highlight"><h3>Confirmed</h3><p>A tiny edit raises scores a lot. The AI's direction is what worked. Data handling was sound</p></div>
+<div class="card highlight"><h3>Confirmed</h3><p>A tiny edit raises scores a lot. The AI's direction is what worked. Confirmed by an independent replication</p></div>
 <div class="card"><h3>Don't overrate</h3><p>It fixes a specific defect; it doesn't make anything smarter. Only one success so far</p></div>
 <div class="card"><h3>Next</h3><p>Can't lift healthy models (we confirmed). Watch it as defect repair; require verification on adoption</p></div>
 </div>

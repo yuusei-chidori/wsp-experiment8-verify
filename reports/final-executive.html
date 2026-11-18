@@ -64,21 +64,21 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <div class="hero-row">
 <span class="tag">最終報告</span>
 <span class="tag">経営層向け</span>
-<span class="tag">2026-11-06</span>
+<span class="tag">2026-11-18 追試反映</span>
 </div>
 <div class="message-box large">中心の主張は確認できた。ただし「どんなモデルでも賢くなる」技術ではなく、特定の欠陥を直す技術</div>
 <div class="summary-grid">
-<div class="mini-card"><b>点数</b><span>算数 31% → 70%、数学 16% → 53%</span></div>
+<div class="mini-card"><b>点数</b><span>算数 18% → 70%、数学 5% → 57%（追試も一致）</span></div>
 <div class="mini-card"><b>変更の量</b><span>モデル全体の 0.015% だけ</span></div>
-<div class="mini-card"><b>信頼性</b><span>不正なデータの使い方なし。成功例は1回だけ</span></div>
+<div class="mini-card"><b>信頼性</b><span>不正なし。追試でも再現。探索の成功は1回</span></div>
 </div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">1ページでの結論</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>研究の主張</th><th>判定</th><th>根拠</th></tr>
 <tr class="up"><td class="l">AI がモデルのごく一部（0.016%）だけを書き換えた</td><td style="white-space:nowrap">正しい</td><td class="l">公開モデルを1ビット単位で比較。変わったのは記事どおりの2か所だけ</td></tr>
-<tr class="up"><td class="l">それで数学の点数が大きく上がった</td><td style="white-space:nowrap">正しい</td><td class="l">算数100問で 31% → 70%、難しい数学100問で 16% → 53%（研究側 67%・48%）。研究側と同じ計算手順では算数 18% → 70%、数学 5% → 57%</td></tr>
-<tr class="up"><td class="l">AI が原因を理解して直した（偶然ではない）</td><td style="white-space:nowrap">正しい</td><td class="l">同じ箇所を「でたらめな方向」に変えた3種は、すべて逆に悪化（15〜20%）</td></tr>
+<tr class="up"><td class="l">それで数学の点数が大きく上がった</td><td style="white-space:nowrap">正しい</td><td class="l">研究側と同じ計算手順で算数 18% → 70%、数学 5% → 57%（研究側 67%・48%）。別担当の追試でも同じ正解数</td></tr>
+<tr class="up"><td class="l">AI が原因を理解して直した（偶然ではない）</td><td style="white-space:nowrap">正しい</td><td class="l">同じ箇所を「でたらめな方向」に変えた3種は上がらない（15〜20%）。追試でも同じ</td></tr>
 <tr class="up"><td class="l">テスト問題を見ずに作った</td><td style="white-space:nowrap">正しい</td><td class="l">公開記録を照合。テスト問題の混入・使い回しなし</td></tr>
 <tr><td class="l">一般的な方法として信頼できる</td><td style="white-space:nowrap">未確認</td><td class="l">大きな成功は1回の実行だけ。ループしない別モデルでは効果なし（研究側・手元の追加実験3回とも）</td></tr>
 </table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 15</div></section>
@@ -134,14 +134,14 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr><td class="l">4. 不正</td><td>確認</td><td class="l">テストを見て調整していないか</td><td class="l">研究チームの公開記録を照合</td></tr>
 <tr class="up"><td class="l">7. 難問</td><td>実験</td><td class="l">数学の難問でも上がるのか</td><td class="l">MATH-500 の100問を解かせた</td></tr>
 <tr class="up"><td class="l">8・9. 差</td><td>実験</td><td class="l">元の点が研究側より高い理由</td><td class="l">研究側と同じ計算手順で解き直した</td></tr>
-<tr class="up"><td class="l">10. 他モデル</td><td>実験</td><td class="l">別の公開モデルにも効くか</td><td class="l">Claude が別モデルの修正を探して試した</td></tr>
+<tr class="up"><td class="l">10〜12. 他モデル</td><td>実験</td><td class="l">別の公開モデルにも効くか</td><td class="l">Claude が別モデルの修正を探して試した</td></tr>
 </table></div>
-<div class="message-box">6 は報告書の作成。研究側の AI（Astra）の探索そのものは未実施。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
+<div class="message-box">6 は報告書の作成。研究側 Astra の探索は未実施。追試は ASTRA が担当。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果①：点数は本当に上がった</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>算数問題 100問（同じ条件）</th><th>元のモデル</th><th>AI が直した後</th></tr>
-<tr class="up"><td class="l">正答率</td><td>31%</td><td>70%</td></tr>
+<tr class="up"><td class="l">正答率</td><td>31%※</td><td>70%</td></tr>
 <tr><td class="l">時間切れになった割合</td><td>64%</td><td>0%</td></tr>
 <tr><td class="l">1問あたりの思考の長さ（平均）</td><td>約 23,500 語片</td><td>約 9,700 語片</td></tr>
 <tr><td class="l">良くなった問題 ／ 悪くなった問題</td><td colspan="2">41問 ／ 2問</td></tr>
@@ -149,18 +149,18 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr class="up"><td class="l">難しい数学 100問：正答率（時間切れ）</td><td>16%（84%）</td><td>53%（29%）</td></tr>
 <tr class="up"><td class="l">研究側と同じ計算手順での数学（研究側）</td><td>5%（7.9%）</td><td>57%（48%）</td></tr>
 </table></div>
-<div class="message-box">数学でも改善37問・悪化0。改善はすべて元が時間切れだった問題。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
+<div class="message-box">※ 追試では元 19%（直した後 69%）。研究側の手順の 18% → 70% は完全一致。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果②：効いたのは AI が見つけた「方向」</div></div><div class="content">
 <div class="compact-table"><table>
 <tr><th>算数問題 100問（同じ2か所を変更）</th><th>正答率</th><th>時間切れ</th></tr>
-<tr><td class="l">元のモデル</td><td>31%</td><td>64%</td></tr>
+<tr><td class="l">元のモデル（追試）</td><td>31%（19%）</td><td>64%（80%）</td></tr>
 <tr class="up"><td class="l">AI が直したモデル</td><td>70%</td><td>0%</td></tr>
 <tr><td class="l">でたらめ①：同じ量だけ変更</td><td>15%</td><td>87%</td></tr>
 <tr><td class="l">でたらめ②：別の乱数で、同じ量だけ変更</td><td>20%</td><td>84%</td></tr>
 <tr><td class="l">でたらめ③：同じ強さ（変更量は 1/3〜1/5）</td><td>15%</td><td>84%</td></tr>
 </table></div>
-<div class="message-box">同じ場所でも方向が違えば逆に悪化する。改善は偶然ではなく、AI が原因を特定した結果。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
+<div class="message-box">でたらめな方向では上がらない（追試でも 15〜20%）。改善は偶然ではなく、AI が見つけた方向による。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果③：データの扱いに不正はなかった</div></div><div class="content">
 <div class="three-col">
@@ -174,7 +174,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <div class="maturity">
 <div class="maturity-card warn"><h3>欠陥を直す技術</h3><p>改善はループという明確な欠陥があったから。ループしない別のモデルでは、同じ方法で点数は上がらなかった（研究チーム自身の結果。手元の追加実験3回でも効果なし）</p></div>
 <div class="maturity-card warn"><h3>成功例が1つ</h3><p>大きな成功は1回の実行だけ。もう一度やって同じ修正が見つかるかは未確認</p></div>
-<div class="maturity-card warn"><h3>検証の範囲</h3><p>算数・数学 各100問・各1回。元モデルの点数の差は計算手順の違いと判明（算数・数学とも）。直した後は一部で答えを出さずに止まる</p></div>
+<div class="maturity-card warn"><h3>検証の範囲</h3><p>算数・数学 各100問・各1回。研究側との差は数学では計算手順で説明できたが、算数は追試で元 19% となり未確定。直した後は一部で答えを出さずに止まる</p></div>
 </div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">追加検証：健康なモデルを 90% に上げられるか</div></div><div class="content">
@@ -197,7 +197,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 
 <section class="slide"><div class="header"><div class="title">まとめ</div></div><div class="content">
 <div class="three-col">
-<div class="card highlight"><h3>確認できた</h3><p>ごく小さな修正で点数が大きく上がる。効いたのは AI が見つけた方向。データの扱いも正しい</p></div>
+<div class="card highlight"><h3>確認できた</h3><p>ごく小さな修正で点数が大きく上がる。効いたのは AI が見つけた方向。別担当の追試でも再現</p></div>
 <div class="card"><h3>過大評価しない</h3><p>「何でも賢くする」ではなく「特定の欠陥を直す」。成功例はまだ1つ</p></div>
 <div class="card"><h3>これから</h3><p>健康なモデルの底上げには使えない（手元で確認）。欠陥の修理として注視し、導入時は検証を必須に</p></div>
 </div>
