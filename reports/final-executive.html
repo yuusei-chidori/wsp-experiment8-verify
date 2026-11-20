@@ -85,19 +85,11 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 
 <section class="slide"><div class="header"><div class="title">背景：「重み」と、それを AI が直すということ</div></div><div class="content">
 <div class="three-col">
-<div class="card"><h3>重みとは</h3><p>AI モデルの中身は数億〜数千億個の数値（重み）。これまでは大量のデータと計算で「学習」させて決めるもので、人が直接いじることはほぼ不可能だった</p></div>
-<div class="card highlight"><h3>今回の研究</h3><p>汎用 AI（GPT-6 Astra）に「この小さなモデルを数学に強くして」と頼むと、AI が中身を調べ、問題の箇所を見つけ、重みを直接書き換えた。学習は一切なし</p></div>
-<div class="card"><h3>研究チームの呼び名</h3><p>Weight-Space Programming（重み空間のプログラミング）。AI が、コードではなくモデルの重みそのものをプログラムする</p></div>
+<div class="card"><h3>重みとは</h3><p>AI モデルの中身は数億〜数千億個の数値（重み）。これまではデータと計算で「学習」させて決めるもので、人が直接いじることはほぼ不可能だった</p></div>
+<div class="card"><h3>これまでの流れ</h3><p>2020年代前半に、専門家が重みを分析して特定の振る舞いを担う部分を書き換える手法が登場。2026年、それを汎用 AI が代わりに行う研究が出た</p></div>
+<div class="card highlight"><h3>今回の研究</h3><p>汎用 AI（GPT-6 Astra）に「この小さなモデルを数学に強くして」と頼むと、AI が中身を調べ、重みを直接書き換えた。学習は一切なし</p></div>
 </div>
-<div class="message-box">研究チームは MIT CSAIL の4名。8つの実験のうち、公開モデルと記録がそろう「実験8」を検証した。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 15</div></section>
-
-<section class="slide"><div class="header"><div class="title">これまでの流れ</div></div><div class="content">
-<div class="timeline">
-<div class="step"><div class="num">1</div><h3>学習で決める時代</h3><p>1990〜2010年代：重みはデータと最適化計算で決まる。中身は「ブラックボックス」</p></div>
-<div class="step"><div class="num">2</div><h3>中身を読む研究</h3><p>2020年代前半：専門家が重みを分析し、特定の知識や振る舞いを担う部分を見つけて書き換える手法が登場</p></div>
-<div class="step"><div class="num">3</div><h3>AI が自分で読む</h3><p>2026年：汎用 AI が専門家の代わりに重みを読み、自然言語の依頼だけで修正する（今回の研究）</p></div>
-</div>
-<div class="message-box">人の専門家が数週間かける「モデルの中身の解析と修正」を、AI が自動で行えるかどうかが論点。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 15</div></section>
+<div class="message-box">呼び名は Weight-Space Programming。MIT CSAIL の4名の研究のうち、公開モデルと記録がそろう「実験8」を検証した。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">なぜ重要か（ビジネスの視点）</div></div><div class="content">
 <div class="two-col">
@@ -113,7 +105,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <li>AI による重みの改変は、悪用（安全装置の解除など）にも使える</li>
 <li>導入には、変更前後の検証手順が必須</li>
 </ul></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 15</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">研究の主張（実験8）</div></div><div class="content">
 <div class="compact-table"><table>
@@ -123,7 +115,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr class="up"><td class="l">IFEval（指示に従う力）</td><td>21.0%</td><td>62.3%</td></tr>
 <tr><td class="l">考えが止まらず時間切れになった割合</td><td>93%</td><td>33%</td></tr>
 </table></div>
-<div class="message-box">AI が見つけた原因は「同じ考えを延々と繰り返して答えにたどり着けない癖（ループ）」。その癖を作る部分だけを書き換えた。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 15</div></section>
+<div class="message-box">AI が見つけた原因は「同じ考えを延々と繰り返して答えにたどり着けない癖（ループ）」。その癖を作る部分だけを書き換えた。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">検証の進め方：実験と確認の区別</div></div><div class="content">
 <div class="compact-table"><table>
@@ -136,7 +128,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr class="up"><td class="l">8・9. 差</td><td>実験</td><td class="l">元の点が研究側より高い理由</td><td class="l">研究側と同じ計算手順で解き直した</td></tr>
 <tr class="up"><td class="l">10〜12. 他モデル</td><td>実験</td><td class="l">別の公開モデルにも効くか</td><td class="l">Claude が別モデルの修正を探して試した</td></tr>
 </table></div>
-<div class="message-box">6 は報告書の作成。研究側 Astra の探索は未実施。追試は ASTRA が担当。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
+<div class="message-box">6 は報告書の作成。研究側 Astra の探索は未実施。追試は ASTRA が担当。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果①：点数は本当に上がった</div></div><div class="content">
 <div class="compact-table"><table>
@@ -149,7 +141,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr class="up"><td class="l">難しい数学 100問：正答率（時間切れ）</td><td>16%（84%）</td><td>53%（29%）</td></tr>
 <tr class="up"><td class="l">研究側と同じ計算手順での数学（研究側）</td><td>5%（7.9%）</td><td>57%（48%）</td></tr>
 </table></div>
-<div class="message-box">※ 追試では元 19%（直した後 69%）。研究側の手順の 18% → 70% は完全一致。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
+<div class="message-box">※ 追試では元 19%（直した後 69%）。研究側の手順の 18% → 70% は完全一致。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果②：効いたのは AI が見つけた「方向」</div></div><div class="content">
 <div class="compact-table"><table>
@@ -160,7 +152,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr><td class="l">でたらめ②：別の乱数で、同じ量だけ変更</td><td>20%</td><td>84%</td></tr>
 <tr><td class="l">でたらめ③：同じ強さ（変更量は 1/3〜1/5）</td><td>15%</td><td>84%</td></tr>
 </table></div>
-<div class="message-box">でたらめな方向では上がらない（追試でも 15〜20%）。改善は偶然ではなく、AI が見つけた方向による。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
+<div class="message-box">でたらめな方向では上がらない（追試でも 15〜20%）。改善は偶然ではなく、AI が見つけた方向による。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">結果③：データの扱いに不正はなかった</div></div><div class="content">
 <div class="three-col">
@@ -168,14 +160,14 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <div class="card highlight"><h3>使い回しなし</h3><p>修正を決めた後に、別の1,152問で効果を確認していた。決める時に使った問題とは1問も重ならない</p></div>
 <div class="card"><h3>報告の仕方</h3><p>記事に載っていない試行もあった（多くは修正なしで終了）。大きな成功は1回の実行だけ</p></div>
 </div>
-<div class="message-box">「テストに合わせて調整した見かけの改善」ではない。ただし再現性は、まだ1例しかない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 15</div></section>
+<div class="message-box">「テストに合わせて調整した見かけの改善」ではない。ただし再現性は、まだ1例しかない。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">限界と注意点</div></div><div class="content">
 <div class="maturity">
 <div class="maturity-card warn"><h3>欠陥を直す技術</h3><p>改善はループという明確な欠陥があったから。ループしない別のモデルでは、同じ方法で点数は上がらなかった（研究チーム自身の結果。手元の追加実験3回でも効果なし）</p></div>
 <div class="maturity-card warn"><h3>成功例が1つ</h3><p>大きな成功は1回の実行だけ。もう一度やって同じ修正が見つかるかは未確認</p></div>
 <div class="maturity-card warn"><h3>検証の範囲</h3><p>算数・数学 各100問・各1回。研究側との差は数学では計算手順で説明できたが、算数は追試で元 19% となり未確定。直した後は一部で答えを出さずに止まる</p></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 15</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">追加検証：健康なモデルを 90% に上げられるか</div></div><div class="content">
 <div class="compact-table"><table>
@@ -185,7 +177,18 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <tr><td class="l">途中の確認（100問）</td><td class="l">78 → 86 問。有望に見えた</td></tr>
 <tr class="up"><td class="l">本番（500問）</td><td class="l">431 → 426 問。でたらめな修正でも 428 問。効果なし</td></tr>
 </table></div>
-<div class="message-box">欠陥のないモデルの底上げには使えない。小さな確認での好結果は、本番で消えることがある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 15</div></section>
+<div class="message-box">欠陥のないモデルの底上げには使えない。小さな確認での好結果は、本番で消えることがある。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 15</div></section>
+
+<section class="slide"><div class="header"><div class="title">新しい論文：モデルが自分の重みを直す（2026年11月）</div></div><div class="content">
+<div class="compact-table"><table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td class="l" style="white-space:nowrap">論文</td><td class="l">Fan ほか11名「Language Models Can Rewrite Their Own Weights」（UIUC・Stanford ほか、arXiv 2611.21885）</td></tr>
+<tr><td class="l" style="white-space:nowrap">何をしたか</td><td class="l">Qwen3.5-27B が、学習も GPU も使わず、自分で考えて書いたコードで自分の重みを書き換えた</td></tr>
+<tr class="up"><td class="l" style="white-space:nowrap">壊れたモデルの修理</td><td class="l">重みの一部を壊して正答 0% にしたモデルが、自分で 33%（壊す前は 58.5%）まで回復。画像の問題でも 7% → 70%</td></tr>
+<tr><td class="l" style="white-space:nowrap">健康なモデルの改善</td><td class="l">事前に決めた未知の問題で 57.2% → 58.3%（+1.1 点）と小さい。8回中5回は自分で「提出しない」と判断</td></tr>
+<tr><td class="l" style="white-space:nowrap">限界</td><td class="l">2B・4B・9B の小さいモデルでは失敗。1つのモデル系列だけで、壊し方も人工的</td></tr>
+</table></div>
+<div class="message-box">「欠陥の修理には強く、健康なモデルの底上げは小さい」。今回の検証の結論と同じ傾向。</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 15</div></section>
 
 <section class="slide"><div class="header"><div class="title">ビジネスへの示唆</div></div><div class="content">
 <div class="timeline">
@@ -199,7 +202,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <div class="three-col">
 <div class="card highlight"><h3>確認できた</h3><p>ごく小さな修正で点数が大きく上がる。効いたのは AI が見つけた方向。別担当の追試でも再現</p></div>
 <div class="card"><h3>過大評価しない</h3><p>「何でも賢くする」ではなく「特定の欠陥を直す」。成功例はまだ1つ</p></div>
-<div class="card"><h3>これから</h3><p>健康なモデルの底上げには使えない（手元で確認）。欠陥の修理として注視し、導入時は検証を必須に</p></div>
+<div class="card"><h3>これから</h3><p>健康なモデルの底上げには使えない（手元で確認）。新しい論文も同じ傾向。欠陥の修理として注視し、導入時は検証を必須に</p></div>
 </div>
 <div class="message-box large">本物の成果。ただし「欠陥の修理」として評価すべき</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">14 / 15</div></section>
 
@@ -207,6 +210,7 @@ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{b
 <div class="compact-table"><table>
 <tr><th>資料</th><th>内容</th></tr>
 <tr><td class="l">元の研究</td><td class="l">Takehi ほか (2026)「Sparks of Weight-Space Programming」rikiyat.github.io/blog/weight-space-programming/</td></tr>
+<tr><td class="l">新しい論文</td><td class="l">Fan ほか (2026)「Language Models Can Rewrite Their Own Weights」arxiv.org/abs/2611.21885</td></tr>
 <tr><td class="l">公開データ</td><td class="l">実験記録 github.com/RikiyaT/lm_understand-logs、修正済みモデル huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming</td></tr>
 <tr><td class="l">関連研究</td><td class="l">重みの直接編集 ROME（Meng ほか 2022）、1方向の除去で振る舞いを消す（Arditi ほか 2024）、Software 2.0（Karpathy 2017）</td></tr>
 <tr><td class="l">詳細</td><td class="l">技術者向け最終報告（final-engineer.html）：変更された重みの実例、乱数シード、ハッシュ、全参考文献</td></tr>

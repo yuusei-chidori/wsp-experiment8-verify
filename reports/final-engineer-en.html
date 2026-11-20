@@ -81,7 +81,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <div class="mini-card"><b>What the edit is</b><span>2 matrices, only 131,072 weights (0.015%)</span></div>
 <div class="mini-card"><b>Scores</b><span>GSM8K 18% → 70%, MATH 5% → 57%</span></div>
 <div class="mini-card"><b>Controls</b><span>3 random changes: no gain</span></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 45</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">1 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Executive Summary</div></div><div class="content">
 <div class="two-col">
@@ -98,14 +98,14 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <li>No overlap between training problems and test (Step 4)</li>
 </ul></div>
 </div>
-<div class="message-box">It "breaks reasoning loops". Replication agrees (3-20). Search reproducibility not confirmed.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 45</div></section>
+<div class="message-box">It "breaks reasoning loops". Replication agrees (3-20). Search reproducibility not confirmed.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">2 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Contents</div></div><div class="content">
 <div class="three-col">
-<div class="card"><h3>1. Introduction and Background (1-1–1-5)</h3><ul><li>What we verified</li><li>What is Weight-Space Programming</li><li>History (writing / reading and editing weights)</li><li>Why it matters</li></ul></div>
+<div class="card"><h3>1. Introduction and Background (1-1–1-8)</h3><ul><li>What we verified</li><li>What is Weight-Space Programming</li><li>History (writing / reading and editing weights)</li><li>Why it matters</li><li>Latest paper (self-rewriting)</li></ul></div>
 <div class="card"><h3>2. Experiment 8 and Verification (2-1–3-20)</h3><ul><li>Experiment 8 setup and the edit</li><li>Examples of changed weights</li><li>Methods and results of Steps 1–12, replication</li><li>Implementation issues (mlx-lm)</li></ul></div>
 <div class="card"><h3>3. Conclusions and Appendices (4-1–4-4, Appendix A–D)</h3><ul><li>Verdict per claim</li><li>Limitations and next checks</li><li>Appendix: env, seeds, hashes, column indices</li><li>References</li></ul></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 45</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">3 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-1 What We Verified</div></div><div class="content">
 <div class="two-col">
@@ -120,7 +120,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <li>Cause is "reasoning loops"; the edit removes that direction</li>
 </ul></div>
 </div>
-<div class="message-box">Chosen because Experiment 8 has a published model and logs, and the smallest model, so it can be reproduced locally.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 45</div></section>
+<div class="message-box">Chosen because Experiment 8 has a published model and logs, and the smallest model, so it can be reproduced locally.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">4 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-2 What Is Weight-Space Programming</div></div><div class="content">
 <div class="flow-row tight">
@@ -132,7 +132,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Read</td><td>1, 2, 3, 7</td><td class="l">From weights alone, tell which game was learned, which language, which was trained to be sycophantic</td></tr>
 <tr><td class="l">Fix</td><td>4, 8</td><td class="l">Make a failing control policy succeed with one edit / stop Qwen's loops</td></tr>
 <tr><td class="l">Write</td><td>5, 6</td><td class="l">Write MinAtar or Go-playing networks from scratch, no training</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">5 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-3 History (1): Ways to "Write" Weights</div></div><div class="content">
 <div class="compact-table"><table>
@@ -143,7 +143,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>2021</td><td class="l">Linear Transformers = Fast Weight Programmers (Schlag et al.)</td><td class="l">Linear attention equals rewriting weights at run time (cited by the blog as a "purpose-trained writer")</td></tr>
 <tr><td>2021, 2023</td><td class="l">RASP (Weiss et al.) / Tracr (Lindner et al.)</td><td class="l">Compile formal programs into Transformer weights (cited by the blog as a "compiler")</td></tr>
 </table></div>
-<div class="message-box">The "writer" was always an optimizer, a purpose-trained model, or a formal-language compiler. No general LLM wrote weights from natural-language instructions.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 45</div></section>
+<div class="message-box">The "writer" was always an optimizer, a purpose-trained model, or a formal-language compiler. No general LLM wrote weights from natural-language instructions.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">6 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-4 History (2): Ways to "Read and Edit" Weights</div></div><div class="content">
 <div class="compact-table"><table>
@@ -155,7 +155,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>2023</td><td class="l">Activation Steering, Representation Engineering</td><td class="l">Add/subtract "directions" in internal representations to change behavior</td></tr>
 <tr><td>2024</td><td class="l">Refusal is a single direction (Arditi et al.)</td><td class="l">Projecting 1 direction out of weights removes refusal; close to Exp. 8</td></tr>
 </table></div>
-<div class="message-box">Exp. 8's edit (W − α·u(uᵀW)) follows this "remove a direction" line. New: a general LLM, not a human, chose it.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 45</div></section>
+<div class="message-box">Exp. 8's edit (W − α·u(uᵀW)) follows this "remove a direction" line. New: a general LLM, not a human, chose it.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">7 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">1-5 Why It Matters (Technical)</div></div><div class="content">
 <div class="two-col">
@@ -172,7 +172,51 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <li>One success alone doesn't make it a reliable method</li>
 </ul></div>
 </div>
-<div class="message-box">Our 4 verification questions map one-to-one to the 4 concerns on the right.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 45</div></section>
+<div class="message-box">Our 4 verification questions map one-to-one to the 4 concerns on the right.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">8 / 48</div></section>
+
+<section class="slide"><div class="header"><div class="title">1-6 Latest Related Work (1): A Model Rewrites Its Own Weights</div></div><div class="content">
+<div class="two-col">
+<div class="card"><h3>Setup (arXiv 2611.21885 v2, 2026-11-18)</h3><ul>
+<li>Fan et al., 11 authors (UIUC, CMU, Rutgers, Princeton, Stanford, Yale)</li>
+<li>Editor = edited model: Qwen3.5-27B (also 2B, 4B, 9B)</li>
+<li>Actions: read/write tensors in Python, generate on practice problems, read hidden states. Helper W ← W − α·u uᵀW</li>
+<li>Budget: 20 forward passes, 200 code runs. No gradients, optimizer, GPU or network</li>
+</ul></div>
+<div class="card"><h3>Evaluation</h3><ul>
+<li>Practice: 3,000 DeepScaleR problems (overlap with MATH-500, AIME etc. removed). Eval: separate problems, pre-registered 490 × 8 answers, paired test</li>
+<li>Protocol 1: the model decides to submit. Protocol 2: one trial on 256 hidden problems, then submit or withdraw</li>
+<li>Repair test: 200σ noise in 8 rows of the 27B layer-30 MLP output matrix</li>
+</ul></div>
+</div>
+<div class="message-box">Same edit form as Exp. 8 and wsh ProjectOut: project out one direction. Difference: the editor is the model itself.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 48</div></section>
+
+<section class="slide"><div class="header"><div class="title">1-7 Latest Related Work (2): The Paper's Results</div></div><div class="content">
+<div class="compact-table"><table>
+<tr><th>Experiment (Qwen3.5)</th><th>Before</th><th>After edit</th><th>Note</th></tr>
+<tr><td class="l">27B self-improve, protocol 1 (own task)</td><td>22.4%</td><td>29.6%</td><td class="l">+7.3 pts, p=0.009</td></tr>
+<tr><td class="l">Same, pre-registered unseen (490 × 8)</td><td>57.2%</td><td>58.3%</td><td class="l">+1.1 pts, p=0.038</td></tr>
+<tr><td class="l">27B self-improve, protocol 2 (8 runs)</td><td>—</td><td>3 submit, 5 withdraw</td><td class="l">2 runs +6.6 and +4.0 pts unseen (p&lt;1e-5)</td></tr>
+<tr class="up"><td class="l">27B repair (200 unseen)</td><td>0.0% (58.5% pre-damage)</td><td>33.0%</td><td class="l">Clipped outliers (0.013% of weights)</td></tr>
+<tr class="up"><td class="l">Same, 6 image benchmarks (100 each)</td><td>7.3% (84.3% pre-damage)</td><td>70.2%</td><td class="l">Repaired on text; transferred to images</td></tr>
+<tr><td class="l">2B, 4B, 9B repair</td><td>0.0%</td><td>Not repaired</td><td class="l">9B self-improve: 47.5% → 0.0%</td></tr>
+</table></div>
+<div class="message-box">Actual self-edit (27B run 2): remove 5% of one direction from two layer-8 output matrices (W ← W − 0.05·u uᵀW).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 48</div></section>
+
+<section class="slide"><div class="header"><div class="title">1-8 Latest Related Work (3): Relation to This Verification</div></div><div class="content">
+<div class="two-col">
+<div class="card highlight"><h3>Agrees with our findings</h3><ul>
+<li>A tiny edit: remove one direction from a few matrices</li>
+<li>Repairing a defect works well; lifting a healthy model is small (+1.1 pts; no gain on DeepSeek in Steps 10–12)</li>
+<li>Knowing when not to edit: tested on hidden problems, it withdrew in 5 of 8 runs</li>
+<li>Location matters: fixing the named matrix alone solves 110 of 200; the other 19 matrices alone, 1</li>
+</ul></div>
+<div class="card"><h3>Differences and cautions</h3><ul>
+<li>The editor is the model itself (27B). In Exp. 8, external GPT-6 Astra edited 0.8B</li>
+<li>No 0.8B, GSM8K or MATH-500 results, so numbers are not directly comparable</li>
+<li>No random-direction control. Qwen3.5 family only; damage is artificial</li>
+</ul></div>
+</div>
+<div class="message-box">The paper cites the blog as "the closest work." It agrees with ours: real as defect repair, small lift otherwise.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-1 Experiment 8 Setup (Authors)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -183,7 +227,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">1 pass</td><td class="l">Generate up to 512 problems (base vs. edited allowed) or read up to 1,024 texts (log-probs, activations)</td></tr>
 <tr><td class="l">Forbidden</td><td class="l">Gradients, training, iterative fitting, running the model in the kernel, internet, editing embeddings / output layer / final norm, scalar-only matrix edits</td></tr>
 <tr><td class="l">Eval (after run)</td><td class="l">vLLM, temp 0.6, top_p 0.95, top_k 20, presence penalty 1.5, max 32,768 tokens. GSM8K 2 samples per problem</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">9 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-2 The Problem Astra Found: Loops</div></div><div class="content">
 <div class="two-col">
@@ -198,7 +242,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <li>Confirmed strengths 1, 2, 4 lower only repetitive log-probs, then chose 64 columns, strength 6</li>
 </ul></div>
 </div>
-<div class="message-box">So the edit didn't "teach math"; it "removed a habit of not stopping". This frames the whole verification.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">10 / 45</div></section>
+<div class="message-box">So the edit didn't "teach math"; it "removed a habit of not stopping". This frames the whole verification.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">13 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-3 Edit Formula and Location</div></div><div class="content">
 <div class="message-box large">W′ = W − 6 · u ⊗ (mask₆₄ ⊙ (uᵀW))</div>
@@ -209,7 +253,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Weights touched / actually changed in bf16</td><td>65,536 / 65,260</td><td>65,536 / 64,928</td></tr>
 <tr><td class="l">Relative change of whole tensor (Frobenius)</td><td>10.6%</td><td>8.1%</td></tr>
 </table></div>
-<div class="message-box">Layers 15, 19 are full-attention layers. Cosine of the two layers' u (1,024-dim) is 0.85.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">11 / 45</div></section>
+<div class="message-box">Layers 15, 19 are full-attention layers. Cosine of the two layers' u (1,024-dim) is 0.85.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">14 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-4 Examples of Changed Weights (Layer 15)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -220,7 +264,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Col 11, row 0</td><td>−0.02612</td><td>+0.00458</td><td>−0.02148</td><td>−0.02515</td><td>−0.02551</td></tr>
 <tr><td class="l">Col 1, all rows (untouched column)</td><td colspan="5">Identical to base in all models</td></tr>
 </table></div>
-<div class="message-box">The published edit moves the 64 columns a lot, flipping some signs (col 11). Controls move the same columns in another direction. Some values are unchanged due to bf16 rounding.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">12 / 45</div></section>
+<div class="message-box">The published edit moves the 64 columns a lot, flipping some signs (col 11). Controls move the same columns in another direction. Some values are unchanged due to bf16 rounding.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">15 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-5 Mathematical Properties of the Edit (Measured in Step 1)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -230,7 +274,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Mean |uᵀW| on chosen columns (before → after)</td><td>0.031 → 0.153</td><td>0.024 → 0.120</td><td class="l">uᵀW′ = (1 − 6)·uᵀW = −5·uᵀW</td></tr>
 <tr><td class="l">Relative change within the 64 columns</td><td>85%</td><td>62%</td><td class="l">Chosen columns change a lot</td></tr>
 </table></div>
-<div class="message-box">Note: α = 1 would "remove" the component, but α = 6 "flips and amplifies" it to −5×. The blog's "subtract the direction" is really "write it strongly in reverse".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">13 / 45</div></section>
+<div class="message-box">Note: α = 1 would "remove" the component, but α = 6 "flips and amplifies" it to −5×. The blog's "subtract the direction" is really "write it strongly in reverse".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">16 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">2-6 Results Reported by the Authors</div></div><div class="content">
 <div class="compact-table"><table>
@@ -243,7 +287,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <div class="two-col">
 <div class="card"><h3>AI's own check (training problems)</h3><p>On 1,152 post-lock problems: 10.6% → 60.4% (+49.8 pts, SE 1.5, 579 better, 5 worse). Authors' control: +1.56 pts (SE 3.52)</p></div>
 <div class="card"><h3>Gemma 3 270M (a non-looping model)</h3><p>Same method, no gain (6.8 → 7.0–7.7). Authors admit it "only unlocked a latent ability"</p></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">14 / 45</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">17 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-1 Overview: Experiments and Non-Experiments</div></div><div class="content">
 <div class="compact-table"><table>
@@ -256,7 +300,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr class="up"><td>8, 9</td><td>Experiment</td><td class="l">Rerun with the authors' sampling order</td><td class="l">Local generation</td></tr>
 <tr class="up"><td style="white-space:nowrap">10–12</td><td>Experiment</td><td class="l">Claude searches and tests an edit on another model (11, 12 use public tools)</td><td class="l">DeepSeek 1.5B, local</td></tr>
 </table></div>
-<div class="message-box">Step 6 is report writing. Astra's search was not rerun. Replication of all steps: 3-20.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">15 / 45</div></section>
+<div class="message-box">Step 6 is report writing. Astra's search was not rerun. Replication of all steps: 3-20.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">18 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-2 Step 1: Weight Diff</div></div><div class="content">
 <div class="compact-table"><table>
@@ -268,7 +312,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Rebuild from authors' diff file (edit.npz)</td><td class="l">Bit-exact match</td></tr>
 <tr><td class="l">Fit to W − 6·u(mask·uᵀW)</td><td class="l">Residual 0.23% (layer 15), 0.29% (layer 19). Within bf16 rounding</td></tr>
 </table></div>
-<div class="message-box">The published model is exactly the small edit the blog describes. Nothing else was touched.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">16 / 45</div></section>
+<div class="message-box">The published model is exactly the small edit the blog describes. Nothing else was touched.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">19 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-3 Step 2: Method</div></div><div class="content">
 <div class="compact-table"><table>
@@ -280,7 +324,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Run</td><td class="l">Batch 48, mx.random.seed(0), 1 sample per problem</td></tr>
 <tr><td class="l">Grading</td><td class="l">Last \boxed{} after the last &lt;/think&gt; matched with math-verify. Cross-checked by numeric match</td></tr>
 <tr><td class="l">Statistics</td><td class="l">Wilson 95% CI, paired difference and SE, exact McNemar test</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">17 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">20 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-4 Step 2: Results</div></div><div class="content">
 <div class="compact-table"><table>
@@ -293,7 +337,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <div class="two-col">
 <div class="card highlight"><h3>Reproduced</h3><p>Edited 70% nearly matches authors' 67.1% (all) and 68% (same 100)</p></div>
 <div class="card"><h3>Cause of the gap (Step 8)</h3><p>Base: 31% locally, 15% for authors; 18% with vLLM order (3-13). Replication mlx: 19% (3-20)</p></div>
-</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">18 / 45</div></section>
+</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">21 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-5 Step 2: Where It Improved</div></div><div class="content">
 <div class="compact-table"><table>
@@ -305,7 +349,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <div class="card"><h3>Takeaway</h3><p>All gains come from "problems that looped and never finished". Accuracy on finished ones barely changes (31 → 30)</p></div>
 <div class="card"><h3>Edited model failures</h3><p>8 answers lack \boxed (6 end in repeated whitespace, 2 just no box). A small new kind of breakdown</p></div>
 </div>
-<div class="message-box">Not "better at arithmetic" but "able to think to the end and answer". Matches Astra's diagnosis.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">19 / 45</div></section>
+<div class="message-box">Not "better at arithmetic" but "able to think to the end and answer". Matches Astra's diagnosis.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">22 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-6 Step 3: Random-Direction Control (seed 0)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -320,7 +364,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Accuracy</td><td>31%</td><td>15% (9–23)</td><td>70%</td></tr>
 <tr><td class="l">Cut off / mean tokens</td><td>64% / 23,496</td><td>87% / 29,635</td><td>0% / 9,694</td></tr>
 <tr><td class="l">Per problem</td><td colspan="3">Base → control: 4 better, 20 worse (p = 0.002) / control → published edit: 56 vs 1</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">20 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">23 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-7 Step 4: Public Log Check</div></div><div class="content">
 <div class="compact-table"><table>
@@ -332,7 +376,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Effect on training vs. test</td><td class="l">GSM8K training 11.6 → 70.8%, test 13.8 → 67.1%. No shrinkage</td></tr>
 <tr><td class="l">Runs not in the blog</td><td class="l">v2, v4, v5 runs and 5-pass runs. Most had no edit. Only p50c finished at 50 passes</td></tr>
 </table></div>
-<div class="message-box">Data handling is sound. Weak point: only one successful 50-pass run.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">21 / 45</div></section>
+<div class="message-box">Data handling is sound. Weak point: only one successful 50-pass run.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">24 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-8 Step 5: Two More Controls</div></div><div class="content">
 <div class="compact-table"><table>
@@ -347,7 +391,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Base → control (better, worse, p)</td><td>—</td><td>7, 18, p = 0.04</td><td>2, 18, p = 0.0004</td><td>41, 2</td></tr>
 <tr class="up"><td class="l">Control → published edit</td><td>—</td><td>52 vs 2 (+50 pts)</td><td>55 vs 0 (+55 pts)</td><td>—</td></tr>
 </table></div>
-<div class="message-box">With coef. 6 (1/3–1/5 the change), loops rose 64% → 84%. Replication: base 19%, 5a 20%, 5b 19% (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">22 / 45</div></section>
+<div class="message-box">With coef. 6 (1/3–1/5 the change), loops rose 64% → 84%. Replication: base 19%, 5a 20%, 5b 19% (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">25 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-9 Control summary: the direction is what worked</div></div><div class="content">
 <div class="compact-table"><table>
@@ -358,7 +402,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Control seed 1 (5a)</td><td>Random</td><td>Same</td><td>20%</td><td>84%</td><td>16 / 16</td></tr>
 <tr><td class="l">Control seed 0, coef. 6 (5b)</td><td>Random</td><td>21–35%</td><td>15%</td><td>84%</td><td>14 / 16</td></tr>
 </table></div>
-<div class="message-box">Random changes do not raise the score. In the replication the base was 19%, so controls are not significantly worse (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">23 / 45</div></section>
+<div class="message-box">Random changes do not raise the score. In the replication the base was 19%, so controls are not significantly worse (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">26 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-10 Step 7: MATH-500 (100 random problems)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -372,7 +416,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Finished before limit</td><td>16</td><td>16</td><td>0</td><td>0</td></tr>
 <tr class="up"><td class="l">Thought until limit</td><td>84</td><td>37</td><td>18</td><td>29</td></tr>
 </table></div>
-<div class="message-box">All gains come from looping problems. With the authors' sampling: 5 → 57% (3-15).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">24 / 45</div></section>
+<div class="message-box">All gains come from looping problems. With the authors' sampling: 5 → 57% (3-15).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">27 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-11 Step 7: By difficulty, and a new side effect</div></div><div class="content">
 <div class="compact-table"><table>
@@ -385,7 +429,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Finished</td><td>36</td><td>100</td><td>16</td><td>71</td></tr>
 <tr><td class="l">Of these, stopped without &lt;/think&gt; (no answer)</td><td>0</td><td>6</td><td>0</td><td>8</td></tr>
 </table></div>
-<div class="message-box">At levels 4–5, nearly half still loop after the edit. After the edit, whitespace in thought bullet lists can grow until an end token appears, ending with no answer.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">25 / 45</div></section>
+<div class="message-box">At levels 4–5, nearly half still loop after the edit. After the edit, whitespace in thought bullet lists can grow until an end token appears, ending with no answer.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">28 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-12 Implementation issue: long generations in mlx-lm</div></div><div class="content">
 <div class="two-col">
@@ -398,7 +442,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <li>mx.eval each cache's left_padding, lengths, offset every 256 steps → graph stays at ~1,040 edges</li>
 </ul></div>
 </div>
-<div class="message-box">Separately, competing with other apps for memory causes GPU out-of-memory stops. We save answers per problem so runs can resume (Step 7 at batch 24: no stops).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">26 / 45</div></section>
+<div class="message-box">Separately, competing with other apps for memory causes GPU out-of-memory stops. We save answers per problem so runs can resume (Step 7 at batch 24: no stops).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">29 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-13 Step 8: Why the base model scores differ</div></div><div class="content">
 <div class="compact-table"><table>
@@ -410,7 +454,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><th>Base model, same 100 problems</th><th>mlx order (Step 2)</th><th>vLLM order</th><th>Authors</th></tr>
 <tr><td class="l">Accuracy / cut off</td><td>31% / 64%</td><td>18% / 82%</td><td>15% / ~86%</td></tr>
 </table></div>
-<div class="message-box">Added --sampler vllm. 14 worse, 1 better (p = 0.001). Not reproduced in the replication (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">27 / 45</div></section>
+<div class="message-box">Added --sampler vllm. 14 worse, 1 better (p = 0.001). Not reproduced in the replication (3-20).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">30 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-14 Step 8: Edit effect under vLLM order</div></div><div class="content">
 <div class="compact-table"><table>
@@ -421,7 +465,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Mean tokens base → edit</td><td>23,496 → 9,694</td><td>27,826 → 11,719</td><td>—</td><td>29,289 → 11,993</td></tr>
 <tr><td class="l">Better, worse (p)</td><td>41, 2</td><td>52, 0 (4×10⁻¹⁶)</td><td>—</td><td>—</td></tr>
 </table></div>
-<div class="message-box">With matched sampling, every metric nearly matches the authors. vLLM-order 18 → 70 matched exactly in the replication.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">28 / 45</div></section>
+<div class="message-box">With matched sampling, every metric nearly matches the authors. vLLM-order 18 → 70 matched exactly in the replication.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">31 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-15 Step 9: MATH-500 under vLLM order</div></div><div class="content">
 <div class="compact-table"><table>
@@ -432,7 +476,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Mean tokens base → edit</td><td>29,157 → 20,844</td><td>31,361 → 20,464</td><td>30,868 → 22,037</td></tr>
 <tr><td class="l">Better, worse (p)</td><td>37, 0</td><td>52, 0 (4×10⁻¹⁶)</td><td>—</td></tr>
 </table></div>
-<div class="message-box">Base model, mlx → vLLM order: 12 worse, 1 better (p = 0.003, all cut off). Published edit: 9, 5 (p = 0.42), unchanged. Post-edit 57% has CI 47–66%, containing the authors' 48.1%.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">29 / 45</div></section>
+<div class="message-box">Base model, mlx → vLLM order: 12 worse, 1 better (p = 0.003, all cut off). Published edit: 9, 5 (p = 0.42), unchanged. Post-edit 57% has CI 47–66%, containing the authors' 48.1%.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">32 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-16 Step 10: Trying the method on another model</div></div><div class="content">
 <div class="compact-table"><table>
@@ -444,7 +488,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Selection</td><td class="l">6 candidates compared on 200 dev-set problems → froze the top one (layer 15, α 1, 172 / 200; SHA-256 recorded)</td></tr>
 <tr><td class="l">Test</td><td class="l">Frozen edit and a random edit of equal change size, on 100 problems each of GSM8K and MATH-500</td></tr>
 </table></div>
-<div class="message-box">Rules saved before the dev-set comparison (results/step10/step10_PROTOCOL.md).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">30 / 45</div></section>
+<div class="message-box">Rules saved before the dev-set comparison (results/step10/step10_PROTOCOL.md).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">33 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-17 Step 10: Results</div></div><div class="content">
 <div class="compact-table"><table>
@@ -453,7 +497,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr class="up"><td class="l">Total (improved, worsened, p)</td><td>169</td><td>170 (12, 11, p 1.0)</td><td>177 (16, 8, p 0.15)</td></tr>
 <tr><td class="l">Dev set: Wait direction α 3</td><td colspan="3" class="l">Wait −75%, length −33%, correct 167 → 165</td></tr>
 </table></div>
-<div class="message-box">Behavior moved, but accuracy did not rise. The paper's gain reads as fixing a "loop failure".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">31 / 45</div></section>
+<div class="message-box">Behavior moved, but accuracy did not rise. The paper's gain reads as fixing a "loop failure".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">34 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-18 Step 11: Rerun with a dedicated tool</div></div><div class="content">
 <div class="compact-table"><table>
@@ -464,7 +508,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Selection</td><td class="l">Swept 5 candidates on training problems → 2 to dev set → froze layer 18 down_proj s 2 (171 / 200)</td></tr>
 <tr class="up"><td class="l">Test, 200 problems</td><td class="l">Base 169 → edit 173 (13, 9, p 0.52), random 172 (11, 8, p 0.65). Edit vs random 12, 11</td></tr>
 </table></div>
-<div class="message-box">Changing tools did not help. The tool's length-corrected diagnostic showed why before any generation.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">32 / 45</div></section>
+<div class="message-box">Changing tools did not help. The tool's length-corrected diagnostic showed why before any generation.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">35 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-19 Step 12: Can MATH-500 reach 90%?</div></div><div class="content">
 <div class="compact-table"><table>
@@ -475,7 +519,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Selection</td><td class="l">Swept 4 edits → 2 to dev set → layer 21 o_proj s 2 (‖ΔW‖ 8.11, 8.9% of layer) went 78 → 86 (8, 0, p 0.008); froze it</td></tr>
 <tr class="up"><td class="l">Test, 500 problems</td><td class="l">Base 431 → edit 426 (25, 30, p 0.59), random 428 (22, 25). Edit vs random 23, 25</td></tr>
 </table></div>
-<div class="message-box">The dev set's 8 wins, 0 losses was selection luck. Removing one direction cannot reach 90%.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">33 / 45</div></section>
+<div class="message-box">The dev set's 8 wins, 0 losses was selection luck. Removing one direction cannot reach 90%.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">36 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">3-20 Replication: ASTRA reran Steps 1–12</div></div><div class="content">
 <div class="compact-table"><table>
@@ -486,7 +530,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">3 random controls (vs. base)</td><td>15, 20, 15 (worse)</td><td>15, 20, 19 (p ≥ 0.45)</td><td>"Worse" not shown</td></tr>
 <tr class="up"><td class="l">DeepSeek (Steps 10–12)</td><td>No effect</td><td>No effect (500: 431 → 426)</td><td>Match</td></tr>
 </table></div>
-<div class="message-box">7,668 new answers; independent audit passed. Likely cause of 31 vs 19: rebuilt GSM8K input order (not proven).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">34 / 45</div></section>
+<div class="message-box">7,668 new answers; independent audit passed. Likely cause of 31 vs 19: rebuilt GSM8K input order (not proven).</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">37 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-1 Verdict per claim</div></div><div class="content">
 <div class="compact-table"><table>
@@ -499,7 +543,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr class="up"><td class="l">Base model 13.8%, 7.9%</td><td>Confirmed</td><td class="l">Steps 8, 9: 18%, 5% with authors' sampling (replicated)</td></tr>
 <tr><td class="l">Edit "removes" the direction</td><td>Caveat</td><td class="l">α = 6 makes it −5×: "flip and amplify"</td></tr>
 <tr><td class="l">Method / other models</td><td>Not confirmed / no effect</td><td class="l">Only one success. No effect on another 1.5B (Steps 10–12)</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">35 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">38 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-2 Limitations</div></div><div class="content">
 <div class="compact-table"><table>
@@ -510,7 +554,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Search itself not rerun</td><td class="l">GPT-6 Astra's search cannot be reproduced. Steps 10–12 are Claude's search on another model, not an Astra replication</td></tr>
 <tr><td class="l">Only 3 random directions</td><td class="l">All 3 show no gain. In the replication they are not significantly worse than base</td></tr>
 <tr><td class="l">Limit of 32,768 tokens</td><td class="l">Effect depends heavily on the limit (longer limits hurt base loops more). Gaps change at other limits</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">36 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">39 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-3 Next checks</div></div><div class="content">
 <div class="compact-table"><table>
@@ -520,7 +564,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>3</td><td class="l">Random-direction controls on MATH-500 too</td><td class="l">~2 hours</td><td class="l">Whether "direction" matters on hard problems</td></tr>
 <tr><td>4</td><td class="l">Redo the search in a new session (authors' side)</td><td class="l">Not possible locally</td><td class="l">Reproducibility as a method</td></tr>
 </table></div>
-<div class="message-box">Steps 7–12 and replication done. #1 bears on practical value; #2, #3 on verification precision.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">37 / 45</div></section>
+<div class="message-box">Steps 7–12 and replication done. #1 bears on practical value; #2, #3 on verification precision.</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">40 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">4-4 Summary</div></div><div class="content">
 <div class="three-col">
@@ -528,7 +572,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <div class="card"><h3>What it does</h3><p>It added no math skill; it broke reasoning loops so the model finishes. Accuracy on finished problems is unchanged</p></div>
 <div class="card"><h3>Open</h3><p>Search reproducibility, effect at short limits. On a loop-free model, all 3 procedures had no effect; MATH-500 90% not reached (Steps 10–12)</p></div>
 </div>
-<div class="message-box large">Experiment 8's core claim reproduced on a local Mac and in an independent replication. "That direction" is what worked</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">38 / 45</div></section>
+<div class="message-box large">Experiment 8's core claim reproduced on a local Mac and in an independent replication. "That direction" is what worked</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">41 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Appendix A: Random seeds and values to reproduce</div></div><div class="content">
 <div class="compact-table"><table>
@@ -539,7 +583,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l" style="white-space:nowrap">Strength</td><td class="l">Magnitude-matched: a = ‖D‖F / ‖r(rᵀW)‖F. Fixed: --alpha 6</td><td class="l">Same</td></tr>
 <tr><td class="l" style="white-space:nowrap">Rounding</td><td class="l">float64 → float32 → bf16 (round-to-nearest-even). Non-target columns keep original bits</td><td class="l">Same</td></tr>
 <tr><td class="l" style="white-space:nowrap">Stop</td><td class="l">248044 (&lt;|im_end|&gt;), 248046 (&lt;|endoftext|&gt;)</td><td class="l">run_gen.py</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">39 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">42 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Appendix B: Models and hashes</div></div><div class="content">
 <div class="compact-table"><table>
@@ -549,7 +593,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Control seed 0 (Step 3)</td><td class="l mono">a1ba1655ae52304285a78d0d58dcdb2f<wbr>f8cd4f6bff0f94d29b2c84ca43fc4185</td><td class="l mono">c359a56fbd27fbe3266361e8e23332ef<wbr>307b3c757971df04baad3a2231b92e81</td></tr>
 <tr><td class="l">Control seed 1 (5a)</td><td class="l mono">681e62a37199855c2337627ca8d9b384<wbr>bd903f4ff53c9dd57d19dc0ea8c64ad4</td><td class="l mono">b93a96723d306c444cff871e700a2622<wbr>d60c3c27b5f226f35014baa3d502e242</td></tr>
 <tr><td class="l">Control seed 0, coef. 6 (5b)</td><td class="l mono">337d36e73d9ec436c0f394b033a70e20<wbr>159174ed49ce671a13d66ce7541903e0</td><td class="l mono">b999422a710c9335586f3e7bf3df2ead<wbr>4e3a7ef0f4ce5f45e277cbda1fb5522f</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">40 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">43 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Appendix C: The 64 edited columns (MLP neuron indices)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -557,7 +601,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>15</td><td class="l">0, 2, 11, 25, 34, 35, 38, 39, 46, 50, 53, 56, 61, 62, 63, 64, 67, 73, 100, 108, 129, 135, 156, 169, 209, 215, 264, 266, 294, 327, 328, 357, 371, 376, 412, 414, 442, 504, 505, 509, 516, 580, 590, 601, 638, 682, 738, 882, 926, 930, 1047, 1060, 1087, 1130, 1155, 1184, 1460, 1481, 1787, 1943, 2005, 2066, 2738, 3003</td></tr>
 <tr><td>19</td><td class="l">1, 5, 8, 11, 13, 15, 17, 18, 34, 36, 44, 55, 63, 66, 69, 92, 93, 95, 98, 114, 119, 127, 145, 152, 161, 168, 171, 195, 246, 259, 265, 343, 364, 445, 506, 544, 621, 625, 636, 744, 766, 770, 799, 877, 965, 1003, 1346, 1410, 1505, 1704, 1799, 2072, 2135, 2175, 2248, 2314, 2376, 2437, 2514, 2595, 2664, 2684, 2816, 3343</td></tr>
 </table></div>
-<div class="message-box">Columns are not the top |uᵀW| (they go down to rank 1,113 in layer 15 and 2,419 in layer 19). Astra used base-model activations (fwd4) to pick "neurons that write the loop direction".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">41 / 45</div></section>
+<div class="message-box">Columns are not the top |uᵀW| (they go down to rank 1,113 in layer 15 and 2,419 in layer 19). Astra used base-model activations (fwd4) to pick "neurons that write the loop direction".</div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">44 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">Appendix D: File list</div></div><div class="content">
 <div class="compact-table"><table>
@@ -568,7 +612,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td class="l">Generated answers</td><td class="l">jsonl files in results/step{2,3,5,7,8,9}_generations/ (one problem per line, full text)</td></tr>
 <tr><td class="l">Model config</td><td class="l">24 layers (18 linear attention, 6 full attention), hidden 1,024, MLP 3,584, vocab 248,320, 873,438,784 text params, bf16</td></tr>
 <tr><td class="l">External</td><td class="l">github.com/RikiyaT/lm_understand-logs (exp8_math), huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">42 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">45 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">References (1)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -579,7 +623,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>4</td><td class="l">Ha, Dai, Le (2016). HyperNetworks. arXiv:1609.09106</td></tr>
 <tr><td>5</td><td class="l">Karpathy (2017). Software 2.0. karpathy.medium.com</td></tr>
 <tr><td>6</td><td class="l">Unterthiner et al. (2020). Predicting Neural Network Accuracy from Weights. arXiv:2002.11448</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">43 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">46 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">References (2)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -590,7 +634,7 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>10</td><td class="l">Elhage et al. (2021). A Mathematical Framework for Transformer Circuits. transformer-circuits.pub</td></tr>
 <tr><td>11</td><td class="l">Olsson et al. (2022). In-context Learning and Induction Heads. arXiv:2209.11895</td></tr>
 <tr><td>12</td><td class="l">Meng et al. (2022). Locating and Editing Factual Associations in GPT (ROME). arXiv:2202.05262 / Mass-Editing Memory in a Transformer (MEMIT). arXiv:2210.07229</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">44 / 45</div></section>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">47 / 48</div></section>
 
 <section class="slide"><div class="header"><div class="title">References (3)</div></div><div class="content">
 <div class="compact-table"><table>
@@ -601,5 +645,6 @@ Re-verifying the Experiment 8 Weight Edit</div><div class="subtitle">Checking th
 <tr><td>16</td><td class="l">Arditi et al. (2024). Refusal in Language Models Is Mediated by a Single Direction. arXiv:2406.11717</td></tr>
 <tr><td>17</td><td class="l">Salimans et al. (2017). Evolution Strategies as a Scalable Alternative to Reinforcement Learning. arXiv:1703.03864</td></tr>
 <tr><td>18</td><td class="l">Cobbe et al. (2021). GSM8K. arXiv:2110.14168 / Hendrycks et al. (2021). MATH. arXiv:2103.03874 / Lightman et al. (2023). MATH-500. arXiv:2305.20050</td></tr>
-</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">45 / 45</div></section>
+<tr><td>19</td><td class="l">Fan et al. (2026). Language Models Can Rewrite Their Own Weights. arXiv:2611.21885</td></tr>
+</table></div></div><div class="footer"><div class="char left"><i role="img" aria-label="財前いずみ"></i></div><div class="char right"><i role="img" aria-label="向安慈"></i></div></div><div class="pageno">48 / 48</div></section>
 </div></body></html>
